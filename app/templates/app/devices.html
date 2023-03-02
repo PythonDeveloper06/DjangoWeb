@@ -1,0 +1,100 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>Here you can add your devices</h3>
+<div class="form-group">
+    <div>
+        <input type="hidden" name="next" value="/" />
+        <input type="submit" value="Add new device" class="btn btn-default open-popup" />
+    </div>
+</div>
+<hr />
+<div class="popup-bg">
+    <div class="popup">
+        <form method="post" class="form-horizontal">
+            {% csrf_token %}
+            <h4 align="center">Add new devices</h4>
+            <hr />
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Device name</label>
+                <div class="col-md-20">
+                    {{ form.device_name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Serial num</label>
+                <div class="col-md-20">
+                    {{ form.serial_num }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Auth key</label>
+                <div class="col-md-20">
+                    {{ form.auth_key }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Status</label>
+                <div class="col-md-20">
+                    {{ form.status }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3">
+                    <input type="hidden" name="next" value="/" />
+                    <input type="submit" value="Add" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+        <div class="form-group">
+            <div>
+                <input type="hidden" name="next" value="/" />
+                <input type="submit" value="Close" class="btn btn-default close-popup" />
+            </div>
+        </div>
+    </div>
+</div>
+{% for block in data %}
+    <div class="block-line">
+        <a href="{% url 'your_device' block.id %}" class="a-default">
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Device name</label>
+                <div class="col-md-20">
+                    {{ block.device_name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Serial Num</label>
+                <div class="col-md-20">
+                    {{ block.serial_num }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Auth key</label>
+                <div class="col-md-20">
+                    {{ block.auth_key }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Status</label>
+                <div class="col-md-20">
+                    {{ block.status }}
+                </div>
+            </div>
+        </a>
+    </div>
+
+{% endfor %}
+
+{% endblock %}
+
+{% block scripts %}
+
+    {% load static %}
+    <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'app/scripts/main.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<h3>Here you can delete your devices</h3>
+<hr />
+<h4>Are you sure you want to remove this device?</h4>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-default">Delete</button>
+    <a href="{% url 'devices' %}" class=" col-md-offset-2 btn btn-default">Return to page</a>
+</form>
+{% endblock %}
