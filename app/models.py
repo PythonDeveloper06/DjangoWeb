@@ -1,9 +1,8 @@
 """
 Definition of models.
 """
-import random
-
 from django.db import models
+from django.urls import reverse_lazy
 from django_userforeignkey.models.fields import UserForeignKey
 
 
@@ -17,7 +16,7 @@ class DeviceModel(models.Model):
     objects = models.Manager()
 
     def get_absolute_url(self):
-        return "/devices"
+        return reverse_lazy('devices')
 
 
 

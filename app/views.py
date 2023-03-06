@@ -4,12 +4,11 @@ Definition of views.
 
 from datetime import datetime
 import random
-from tempfile import tempdir
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpRequest
 from django.urls import reverse_lazy
-from .forms import AddDeviceModel
+from .forms import AddDeviceModel, new_code
 from .models import DeviceModel
 from django.views.generic import DetailView, UpdateView, DeleteView
 
@@ -66,6 +65,22 @@ class DeviceUpdateView(UpdateView):
 
     form_class = AddDeviceModel
 
+    def post(self, request, *args, **kwargs):
+        device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])
+        if 'update_something' in request.POST:
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                return super().post(request, *args, **kwargs)
+        elif 'code' in request.POST:
+            device_lock.auth_key = new_code()
+            form = self.form_class(initial=
+                                   {
+                                       'device_name': device_lock.device_name, 
+                                       'serial_num': device_lock.serial_num, 
+                                       'auth_key': device_lock.auth_key,
+                                       'status': device_lock.status
+                                   })
+            return render(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
 
 
 
@@ -73,6 +88,9 @@ class DeviceDeleteView(DeleteView):
     model = DeviceModel
     template_name = 'app/delete_form.html'
     success_url = reverse_lazy('devices')
+
+    context_object_name = 'data'
+
 
 def devices(request):
     """Renders the about page."""

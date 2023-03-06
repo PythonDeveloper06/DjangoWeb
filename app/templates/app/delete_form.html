@@ -9,6 +9,6 @@
 <form method="post">
     {% csrf_token %}
     <button type="submit" class="btn btn-default">Delete</button>
-    <a href="{% url 'devices' %}" class=" col-md-offset-2 btn btn-default">Return to page</a>
+    <a href="{% url 'your_device' data.id %}" class=" col-md-offset-2 btn btn-default">Return to page</a>
 </form>
 {% endblock %}
