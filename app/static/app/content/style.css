@@ -47,6 +47,12 @@
     margin: 10px;
 }
 
+.regis-form {
+    border-radius: 10px;
+    border: 1px solid;
+    width: 42%;
+}
+
 
 .block-line {
     color: #333333;

@@ -2,23 +2,21 @@
 
 {% block content %}
 
-<h2>{{ title }}</h2>
-<div class="row">
-    <div class="col-md-8">
-        <form method="post" class="form-horizontal">
+<h2 align="center">{{ title }}</h2>
+<div class="row" align="center">
+        <h4>Registration new users.</h4>
+        <hr />
+        <form method="post" class="regis-form">
             {% csrf_token %}
-            <h4>Registration new users.</h4>
-            <hr />
             {{ form.as_p }}
             <div class="form-group">
-                <div class="col-md-1">
+                <div align="center" >
                     <input type="hidden" name="next" value="/" />
                     <input type="submit" value="Sign up" class="btn btn-default" />
                 </div>
             </div>
         </form>
     </div>
-</div>
 {% endblock content %}
 
 {% block scripts %}
