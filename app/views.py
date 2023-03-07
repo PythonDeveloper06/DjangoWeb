@@ -3,7 +3,6 @@ Definition of views.
 """
 
 from datetime import datetime
-import random
 
 from django.shortcuts import render
 from django.http import HttpRequest
@@ -13,6 +12,7 @@ from .models import DeviceModel
 from django.views.generic import DetailView, UpdateView, DeleteView
 
 NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
+
 
 def home(request):
     """Renders the home page."""
