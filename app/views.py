@@ -7,6 +7,7 @@ from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
 from django.urls import reverse_lazy
+from django import forms
 from .forms import AddDeviceModel, new_code
 from .models import DeviceModel
 from django.views.generic import DetailView, UpdateView, DeleteView
@@ -80,6 +81,7 @@ class DeviceUpdateView(UpdateView):
                                        'auth_key': device_lock.auth_key,
                                        'status': device_lock.status
                                    })
+            form.fields['serial_num'].widget.attrs['readonly'] = True
             return render(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
 
 

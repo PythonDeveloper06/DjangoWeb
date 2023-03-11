@@ -58,7 +58,11 @@ class SignUpView(CreateView):
 class AddDeviceModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         self.fields['auth_key'].initial = new_code()
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['serial_num'].widget.attrs['readonly'] = True
 
 
     class Meta:

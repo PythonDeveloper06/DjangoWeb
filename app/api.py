@@ -11,7 +11,7 @@ from .serializers import DeviceSerializer
 class DeviceViewSet(ReadOnlyModelViewSet):
     queryset = DeviceModel.objects.all()
     serializer_class = DeviceSerializer
-    permission_classes = (IsAdminUser, )
+    # permission_classes = (IsAdminUser, )
 
     @action(methods=['get'], detail=True)
     def users(self, request, pk=None):
