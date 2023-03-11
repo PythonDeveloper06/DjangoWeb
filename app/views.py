@@ -8,6 +8,8 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django import forms
+from asgiref.sync import sync_to_async
+
 from .forms import AddDeviceModel, new_code
 from .models import DeviceModel
 from django.views.generic import DetailView, UpdateView, DeleteView
@@ -94,6 +96,7 @@ class DeviceDeleteView(DeleteView):
     context_object_name = 'data'
 
 
+
 def devices(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
@@ -116,3 +119,5 @@ def devices(request):
             'data': devices_numbers,
         }
     )
+
+async_function = sync_to_async(devices, thread_sensitive=False)
