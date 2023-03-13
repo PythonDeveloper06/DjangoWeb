@@ -2,23 +2,15 @@
 Definition of forms.
 """
 import random
+import asyncio
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from .utils import new_code
 from .models import *
-
-
-NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
-
-
-def new_code():
-    rand_number = int(''.join(random.sample(NUMBERS, 4)))
-    while len(str(rand_number)) != 4:
-        rand_number = int(''.join(random.sample(NUMBERS, 4)))
-    return rand_number
 
 
 class BootstrapAuthenticationForm(AuthenticationForm):
@@ -58,11 +50,7 @@ class SignUpView(CreateView):
 class AddDeviceModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
         self.fields['auth_key'].initial = new_code()
-        instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
-            self.fields['serial_num'].widget.attrs['readonly'] = True
 
 
     class Meta:

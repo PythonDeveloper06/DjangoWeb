@@ -3,18 +3,18 @@ Definition of views.
 """
 
 from datetime import datetime
+import asyncio
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django import forms
 from asgiref.sync import sync_to_async
 
-from .forms import AddDeviceModel, new_code
+from .forms import AddDeviceModel
+from .utils import new_code, DeviceMixin
 from .models import DeviceModel
 from django.views.generic import DetailView, UpdateView, DeleteView
-
-NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
 
 
 def home(request):
@@ -61,55 +61,54 @@ class DeviceDetailView(DetailView):
     template_name = 'app/your_device.html'
     context_object_name = 'data'
 
- 
-class DeviceUpdateView(UpdateView):
+
+class DeviceUpdateView(DeviceMixin, UpdateView):
     model = DeviceModel
     template_name = 'app/update_form.html'
-
     form_class = AddDeviceModel
+    view_is_async = True
 
-    def post(self, request, *args, **kwargs):
-        device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])
+    async def get(self, request, *args, **kwargs):
+        device_lock = await self.model.objects.aget(id=self.kwargs['pk'])
+        form = self.get_async_form(device_lock)
+        return await sync_to_async(render)(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
+
+
+    async def post(self, request, *args, **kwargs):
+        device_lock = await self.model.objects.aget(id=self.kwargs['pk'])
         if 'update_something' in request.POST:
             form = self.form_class(request.POST)
             if form.is_valid():
-                return super().post(request, *args, **kwargs)
+                device_lock.device_name = request.POST['device_name']
+                device_lock.serial_num = request.POST['serial_num']
+                device_lock.auth_key = request.POST['auth_key']
+                device_lock.status = request.POST['status']
+                await sync_to_async(device_lock.save)()
+                return await sync_to_async(redirect)(device_lock.get_absolute_url())
         elif 'code' in request.POST:
             device_lock.auth_key = new_code()
-            form = self.form_class(initial=
-                                   {
-                                       'device_name': device_lock.device_name, 
-                                       'serial_num': device_lock.serial_num, 
-                                       'auth_key': device_lock.auth_key,
-                                       'status': device_lock.status
-                                   })
-            form.fields['serial_num'].widget.attrs['readonly'] = True
-            return render(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
-
-
+            form = self.get_async_form(device_lock)
+            return await sync_to_async(render)(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
+    
+    
 
 class DeviceDeleteView(DeleteView):
     model = DeviceModel
     template_name = 'app/delete_form.html'
     success_url = reverse_lazy('devices')
-
     context_object_name = 'data'
+    
 
-
-
-def devices(request):
+async def devices(request):
     """Renders the about page."""
-    assert isinstance(request, HttpRequest)
     if request.method == 'POST':
         form = AddDeviceModel(request.POST)
         if form.is_valid():
-            cleaned_info = form.cleaned_data
-            print(cleaned_info)
-            if not DeviceModel.objects.filter(device_name=cleaned_info['device_name']).exists():
-                form.save()
+            if not await DeviceModel.objects.filter(device_name=form.cleaned_data['device_name']).aexists():
+                await sync_to_async(form.save)()
     form = AddDeviceModel()
-    devices_numbers = DeviceModel.objects.filter(user=request.user)
-    return render(
+    devices_numbers = await sync_to_async(DeviceModel.objects.filter)(user=request.user)
+    return await sync_to_async(render)(
         request,
         'app/devices.html',
         {
@@ -119,5 +118,3 @@ def devices(request):
             'data': devices_numbers,
         }
     )
-
-async_function = sync_to_async(devices, thread_sensitive=False)
