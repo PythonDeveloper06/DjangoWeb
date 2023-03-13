@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django import forms
+from django.core.paginator import Paginator
 from asgiref.sync import sync_to_async
 
 from .forms import AddDeviceModel
@@ -108,6 +109,11 @@ async def devices(request):
                 await sync_to_async(form.save)()
     form = AddDeviceModel()
     devices_numbers = await sync_to_async(DeviceModel.objects.filter)(user=request.user)
+
+    paginator = await sync_to_async(Paginator)(devices_numbers, 3)
+    page_number = await sync_to_async(request.GET.get)('page')
+    page_obj = await sync_to_async(paginator.get_page)(page_number)
+
     return await sync_to_async(render)(
         request,
         'app/devices.html',
@@ -115,6 +121,6 @@ async def devices(request):
             'title':'Your devices',
             'form': form,
             'year': datetime.now().year,
-            'data': devices_numbers,
+            'page_new': page_obj
         }
     )

@@ -56,7 +56,7 @@
         </div>
     </div>
 </div>
-{% for block in data %}
+{% for block in page_new %}
     <div class="block-line">
         <a href="{% url 'your_device' block.id %}" class="a-default">
             <div class="form-group">
@@ -87,8 +87,27 @@
     </div>
 
 {% endfor %}
+{% if page_new.has_other_pages %}
+    <div class="circle">
+        {% if page_new.has_previous %}
+        <a class="icon" href="?page={{ page_new.previous_page_number }}">&lt;</a>
+        {% endif %}
 
+        {% for p in page_new.paginator.page_range %}
+        {% if page_new.number == p %}
+        <a class="page-num">{{ p }}</a>
+        {% elif p >= page_new.number|add:-2 and  p <= page_new.number|add:2 %}
+        <a class="icon" href="?page={{ p }}">{{ p }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if page_new.has_next %}
+        <a class="icon" href="?page={{ page_new.next_page_number }}">&gt;</a>
+        {% endif %}
+    </div>
+{% endif %}
 {% endblock %}
+
 
 {% block scripts %}
 
