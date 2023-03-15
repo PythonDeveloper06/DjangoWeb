@@ -4,6 +4,9 @@ Definition of forms.
 import random
 import asyncio
 
+from django.contrib.auth.models import User
+from .models import Profile
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
@@ -13,6 +16,26 @@ from .utils import new_code
 from .models import *
 
 
+class UpdateUserForm(forms.ModelForm):
+    username = forms.CharField(max_length=100,
+                               required=True,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['username']
+
+
+class UpdateProfileForm(forms.ModelForm):
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
+
+    class Meta:
+        model = Profile
+        fields = ['avatar', 'bio']
+
+
+# !!! Login Users !!!
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
@@ -25,6 +48,7 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'placeholder':'Password'}))
 
 
+# !!! Custom Registration Form !!!
 class CustomUserCreationForm(UserCreationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
@@ -41,12 +65,14 @@ class CustomUserCreationForm(UserCreationForm):
                                    'placeholder':'Confirm password'}))
 
 
+# !!! Create Registration View !!!
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'app/signup.html'
 
 
+# !!! My form !!!
 class AddDeviceModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

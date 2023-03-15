@@ -6,18 +6,22 @@ from datetime import datetime
 import asyncio
 
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.urls import reverse_lazy
 from django import forms
 from django.core.paginator import Paginator
 from asgiref.sync import sync_to_async
+from django.contrib import messages
 
-from .forms import AddDeviceModel
+from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm
 from .utils import new_code, DeviceMixin
 from .models import DeviceModel
 from django.views.generic import DetailView, UpdateView, DeleteView
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 
-
+# !!! basic views !!!
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -57,6 +61,7 @@ def about(request):
     )
 
 
+# !!! Class Basic Views !!!
 class DeviceDetailView(DetailView):
     model = DeviceModel
     template_name = 'app/your_device.html'
@@ -69,6 +74,8 @@ class DeviceUpdateView(DeviceMixin, UpdateView):
     form_class = AddDeviceModel
     view_is_async = True
 
+
+    # !!! ASYNC !!!
     async def get(self, request, *args, **kwargs):
         device_lock = await self.model.objects.aget(id=self.kwargs['pk'])
         form = self.get_async_form(device_lock)
@@ -100,6 +107,7 @@ class DeviceDeleteView(DeleteView):
     context_object_name = 'data'
     
 
+# !!! start of all work !!!
 async def devices(request):
     """Renders the about page."""
     if request.method == 'POST':
@@ -124,3 +132,30 @@ async def devices(request):
             'page_new': page_obj
         }
     )
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        user_form = UpdateUserForm(data=request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(data=request.POST, files=request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Wrong data')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+
+    return render(request, 'app/profile.html', {'user_form': user_form, 'profile_form': profile_form, 'title': 'Profile', 'year': datetime.now().year})
+
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'app/change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('profile')
+    extra_context = {'year': datetime.now().year}

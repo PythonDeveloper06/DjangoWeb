@@ -4,13 +4,16 @@ Definition of urls for DjangoWeb.
 
 from datetime import datetime
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.urls import path, include
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
 from app.forms import SignUpView
 from app.api import DeviceViewSet
-
+from app.views import ChangePasswordView
 from rest_framework import routers
 
 
@@ -56,4 +59,8 @@ urlpatterns = [
          ), 
          name="signup"),
     path('api/v1.0/', include(router.urls)),
-]
+
+    path('profile/', views.profile, name='profile'),
+    path('change-password/', ChangePasswordView.as_view(), name='change_password'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,9 +1,13 @@
 """
 Definition of models.
 """
+from email.policy import default
+from PIL import Image
+
 from django.db import models
 from django.urls import reverse_lazy
 from django_userforeignkey.models.fields import UserForeignKey
+from django.contrib.auth.models import User
 
 
 class DeviceModel(models.Model):
@@ -17,8 +21,22 @@ class DeviceModel(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy('devices')
-        
 
 
+class Profile(models.Model):
+    bio = models.TextField()
+    avatar = models.ImageField(upload_to='profile_images', default='default.jpg')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self, *args, **kwargs):
+        super().save()
+        img = Image.open(self.avatar.path)
+        if img.height > 100 or img.width > 100:
+            new_img = (100, 100)
+            img.thumbnail(new_img)
+            img.save(self.avatar.path)
 
 
