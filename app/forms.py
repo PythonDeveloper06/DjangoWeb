@@ -48,26 +48,9 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'placeholder':'Password'}))
 
 
-# !!! Custom Registration Form !!!
-class CustomUserCreationForm(UserCreationForm):
-    """Authentication form which uses boostrap CSS."""
-    username = forms.CharField(max_length=254,
-                               widget=forms.TextInput({
-                                   'class': 'form-control',
-                                   'placeholder': 'Username'}))
-    password1 = forms.CharField(label=_("Password"),
-                               widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Password'}))
-    password2 = forms.CharField(label=_("Confirm password"),
-                               widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Confirm password'}))
-
-
 # !!! Create Registration View !!!
 class SignUpView(CreateView):
-    form_class = CustomUserCreationForm
+    form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'app/signup.html'
 
