@@ -1,1 +1,1 @@
-Сайт для SELD
+WEB for SELD
