@@ -93,6 +93,7 @@
     <Content Include="app\templates\app\your_device.html" />
     <Content Include="media\default.jpg" />
     <Content Include="media\profile_images\default.jpg" />
+    <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
