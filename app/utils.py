@@ -5,6 +5,7 @@ NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
 
 
 def new_code():
+    """Generate code"""
     rand_number = int(''.join(random.sample(NUMBERS, 4)))
     while len(str(rand_number)) != 4:
         rand_number = int(''.join(random.sample(NUMBERS, 4)))

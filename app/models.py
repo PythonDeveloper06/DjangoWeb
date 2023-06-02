@@ -1,7 +1,6 @@
 """
 Definition of models.
 """
-from email.policy import default
 from PIL import Image
 
 from django.db import models
@@ -24,8 +23,8 @@ class DeviceModel(models.Model):
 
 
 class Profile(models.Model):
-    bio = models.TextField()
-    avatar = models.ImageField(upload_to='profile_images', default='default.jpg')
+    bio = models.TextField(null=True)
+    avatar = models.ImageField(default='default.jpg')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

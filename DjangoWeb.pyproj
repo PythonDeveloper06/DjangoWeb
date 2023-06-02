@@ -4,7 +4,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>DjangoWeb</Name>
     <RootNamespace>DjangoWeb</RootNamespace>
-    <InterpreterId>MSBuild|env1|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
     <SuppressPackageInstallationPrompt>True</SuppressPackageInstallationPrompt>
   </PropertyGroup>
@@ -78,7 +78,6 @@
     <Folder Include="app\templates\app\" />
     <Folder Include="DjangoWeb\" />
     <Folder Include="media\" />
-    <Folder Include="media\profile_images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\content\style.css" />
@@ -92,7 +91,6 @@
     <Content Include="app\templates\app\delete_form.html" />
     <Content Include="app\templates\app\your_device.html" />
     <Content Include="media\default.jpg" />
-    <Content Include="media\profile_images\default.jpg" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />

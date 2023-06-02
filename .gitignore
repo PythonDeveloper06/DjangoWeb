@@ -363,8 +363,3 @@ MigrationBackup/
 FodyWeavers.xsd
 /envweb
 /env1
-/static/rest_framework
-/static/app/scripts
-/static/app
-/static/admin/js
-/static

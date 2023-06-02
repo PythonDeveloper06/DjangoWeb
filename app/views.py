@@ -1,9 +1,4 @@
-"""
-Definition of views.
-"""
-
 from datetime import datetime
-import asyncio
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -109,7 +104,7 @@ class DeviceDeleteView(DeleteView):
 
 # !!! start of all work !!!
 async def devices(request):
-    """Renders the about page."""
+    """Renders the device page."""
     if request.method == 'POST':
         form = AddDeviceModel(request.POST)
         if form.is_valid():
