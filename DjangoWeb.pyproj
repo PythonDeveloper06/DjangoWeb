@@ -59,6 +59,12 @@
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
+    <Compile Include="DjangoWeb\dev_settings.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DjangoWeb\production_settings.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="manage.py" />
     <Compile Include="DjangoWeb\__init__.py" />
     <Compile Include="DjangoWeb\settings.py" />
