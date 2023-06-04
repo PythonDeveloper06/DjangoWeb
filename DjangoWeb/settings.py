@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_userforeignkey',
     'rest_framework',
+    'debug_toolbar',
 ]
 
 # Middleware framework
@@ -40,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django_userforeignkey.middleware.UserForeignKeyMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -105,6 +107,8 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
         ]
     }
+
+INTERNAL_IPS = ['127.0.0.1']
 
 try:
     from .dev_settings import *

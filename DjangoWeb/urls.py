@@ -63,4 +63,12 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('change-password/', ChangePasswordView.as_view(), name='change_password'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns 
