@@ -1,0 +1,86 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<h3>Here you can add your new keys for devices</h3>
+<div class="form-group">
+    <div>
+        <input type="hidden" name="next" value="/" />
+        <input type="submit" value="Add new keys for devices" class="btn btn-default open-popup" />
+        <a href="{% url 'devices' %}" class="col-md-offset btn btn-outline-dark">Return to page</a>
+    </div>
+</div>
+<hr />
+<div class="popup-bg">
+    <div class="popup">
+        <form method="post" class="form-horizontal">
+            {% csrf_token %}
+            <h4 align="center">Add new keys</h4>
+            <hr />
+            <div class="form-group">
+                <label class="col-md-3 lining control-label">Key</label>
+                <div class="col-md-20">
+                    {{ form.key }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3">
+                    <input type="hidden" name="next" value="/" />
+                    <input type="submit" value="Add" class="btn btn-outline-dark" />
+                </div>
+            </div>
+        </form>
+        <div class="form-group">
+            <div>
+                <input type="hidden" name="next" value="/" />
+                <input type="submit" value="Close" class="btn btn-outline-dark close-popup" />
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for block in page_new %}
+<div class="block-line">
+    <a href="{% url 'delete_key_form' block.device_id block.id %}" class="a-default">
+        <div class="form-group">
+            <label class="col-md-3 lining control-label">Key</label>
+            <div class="col-md-20">
+                {{ block.key }}
+            </div>
+        </div>
+    </a>
+</div>
+{% endfor %}
+
+{% if page_new.has_other_pages %}
+<div class="circle">
+    {% if page_new.has_previous %}
+    <a class="icon" href="?page={{ page_new.previous_page_number }}">&lt;</a>
+    {% endif %}
+
+    {% for p in page_new.paginator.page_range %}
+        {% if page_new.number == p %}
+            <a class="page-num">{{ p }}</a>
+        {% elif p >= page_new.number|add:-2 and  p <= page_new.number|add:2 %}
+            <a class="icon" href="?page={{ p }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page_new.has_next %}
+        <a class="icon" href="?page={{ page_new.next_page_number }}">&gt;</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    {% load static %}
+    <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'app/scripts/main.js' %}"></script>
+
+{% endblock %}

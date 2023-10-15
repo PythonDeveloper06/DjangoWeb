@@ -18,12 +18,6 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-3 lining control-label">Auth key</label>
-        <div class="col-md-20">
-            {{ data.auth_key }}
-        </div>
-    </div>
-    <div class="form-group">
         <label class="col-md-3 lining control-label">Status</label>
         <div class="col-md-20">
             {{ data.status }}
@@ -31,8 +25,9 @@
     </div>
 </div>
 <div>
-    <a href="{% url 'update_form' data.id %}" class="col-md-offset-1 btn btn-default">Update</a>
-    <a href="{% url 'delete_form' data.id %}" class="col-md-offset btn btn-default">Delete</a>
-    <a href="{% url 'devices' %}" class="col-md-offset btn btn-default">Return to page</a>
+    <a href="{% url 'update_form' data.id %}" class="col-md-offset-1 btn btn-outline-dark">Update</a>
+    <a href="{% url 'delete_form' data.id %}" class="col-md-offset btn btn-outline-dark">Delete</a>
+    <a href="{% url 'keys' data.id %}" class="col-md-offset btn btn-outline-dark">Keys</a>
+    <a href="{% url 'devices' %}" class="col-md-offset btn btn-outline-dark">Return to page</a>
 </div>
 {% endblock %}

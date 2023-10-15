@@ -4,14 +4,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.urls import reverse_lazy
-from django import forms
 from django.core.paginator import Paginator
 from asgiref.sync import sync_to_async
 from django.contrib import messages
 
-from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm
-from .utils import new_code, DeviceMixin
-from .models import DeviceModel
+from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysModel
+from .models import DeviceModel, Keys
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
@@ -55,6 +53,11 @@ def about(request):
         }
     )
 
+def seld(request):
+    """Renders the SELD page."""
+    assert isinstance(request, HttpRequest)
+    return render(request, 'app/seld.html', {'title': 'SELD'})
+
 
 # !!! Class Basic Views !!!
 class DeviceDetailView(DetailView):
@@ -63,36 +66,22 @@ class DeviceDetailView(DetailView):
     context_object_name = 'data'
 
 
-class DeviceUpdateView(DeviceMixin, UpdateView):
+class DeviceUpdateView(UpdateView):
     model = DeviceModel
     template_name = 'app/update_form.html'
     form_class = AddDeviceModel
-    view_is_async = True
 
 
-    # !!! ASYNC !!!
-    async def get(self, request, *args, **kwargs):
-        device_lock = await self.model.objects.aget(id=self.kwargs['pk'])
-        form = self.get_async_form(device_lock)
-        return await sync_to_async(render)(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
-
-
-    async def post(self, request, *args, **kwargs):
-        device_lock = await self.model.objects.aget(id=self.kwargs['pk'])
-        if 'update_something' in request.POST:
-            form = self.form_class(request.POST)
-            if form.is_valid():
-                device_lock.device_name = request.POST['device_name']
-                device_lock.serial_num = request.POST['serial_num']
-                device_lock.auth_key = request.POST['auth_key']
-                device_lock.status = request.POST['status']
-                await sync_to_async(device_lock.save)()
-                return await sync_to_async(redirect)(device_lock.get_absolute_url())
-        elif 'code' in request.POST:
-            device_lock.auth_key = new_code()
-            form = self.get_async_form(device_lock)
-            return await sync_to_async(render)(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
-    
+    def get(self, request, **kwargs):
+        device_lock = self.model.objects.get(id=self.kwargs['pk'])
+        form = self.form_class(initial=
+                                   {
+                                       'device_name': device_lock.device_name, 
+                                       'serial_num': device_lock.serial_num, 
+                                       'status': device_lock.status
+                                   })
+        form.fields['serial_num'].widget.attrs['readonly'] = True
+        return render(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
     
 
 class DeviceDeleteView(DeleteView):
@@ -100,14 +89,21 @@ class DeviceDeleteView(DeleteView):
     template_name = 'app/delete_form.html'
     success_url = reverse_lazy('devices')
     context_object_name = 'data'
+
+
+class KeyDeleteView(DeleteView):
+    model = Keys
+    template_name = 'app/delete_key_form.html'
+    success_url = reverse_lazy('devices')
+    context_object_name = 'data'
     
 
 # !!! start of all work !!!
 async def devices(request):
-    """Renders the device page."""
+    """Renders and proccesing info the device page."""
     if request.method == 'POST':
         form = AddDeviceModel(request.POST)
-        if form.is_valid():
+        if await sync_to_async(form.is_valid)():
             if not await DeviceModel.objects.filter(device_name=form.cleaned_data['device_name']).aexists():
                 await sync_to_async(form.save)()
     form = AddDeviceModel()
@@ -154,3 +150,33 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('profile')
     extra_context = {'year': datetime.now().year}
+
+
+def keys(request, pk):
+    """Renders and proccesing info the key`s page."""
+    device_lock = DeviceModel.objects.get(id=pk)
+    if request.method == 'POST':
+        form = AddKeysModel({
+            'key': request.POST['key'],
+            'device': device_lock
+            })
+        if form.is_valid():
+            if not Keys.objects.filter(key=request.POST['key']).exists():
+                form.save()
+    form = AddKeysModel()
+    devices_numbers = Keys.objects.filter(device_id=pk)
+
+    paginator = Paginator(devices_numbers, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(
+        request,
+        'app/keys.html',
+        {
+            'title':'Your keys',
+            'form': form,
+            'year': datetime.now().year,
+            'page_new': page_obj
+        }
+    )

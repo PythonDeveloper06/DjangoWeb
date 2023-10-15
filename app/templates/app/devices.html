@@ -2,109 +2,114 @@
 
 {% block content %}
 
-<h2>{{ title }}.</h2>
+<h2>{{ title }}</h2>
 <h3>Here you can add your devices</h3>
 <div class="form-group">
     <div>
         <input type="hidden" name="next" value="/" />
-        <input type="submit" value="Add new device" class="btn btn-default open-popup" />
+        <input type="submit" value="Add new device" class="btn btn-outline-dark open-popup" />
     </div>
 </div>
 <hr />
+
 <div class="popup-bg">
     <div class="popup">
         <form method="post" class="form-horizontal">
             {% csrf_token %}
             <h4 align="center">Add new devices</h4>
             <hr />
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Device name</label>
-                <div class="col-md-20">
+            <div class="row row-cols-2 mb-2">
+                <label class="col-lg-3 control-label text-center">Device name</label>
+                <div class="col-lg-9">
                     {{ form.device_name }}
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Serial num</label>
-                <div class="col-md-20">
+            <div class="row row-cols-2 mb-2">
+                <label class="col-lg-3 control-label text-center">Serial Num</label>
+                <div class="col-lg-9">
                     {{ form.serial_num }}
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Auth key</label>
-                <div class="col-md-20">
-                    {{ form.auth_key }}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Status</label>
-                <div class="col-md-20">
+            <div class="row row-cols-2 mb-2">
+                <label class="col-lg-3 control-label text-center">Status</label>
+                <div class="col-lg-9">
                     {{ form.status }}
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-3">
-                    <input type="hidden" name="next" value="/" />
-                    <input type="submit" value="Add" class="btn btn-default" />
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <input type="hidden" name="next" value="/" />
+                        <input type="submit" value="Add" class="btn btn-outline-dark" />
+                    </div>
                 </div>
             </div>
         </form>
-        <div class="form-group">
-            <div>
-                <input type="hidden" name="next" value="/" />
-                <input type="submit" value="Close" class="btn btn-default close-popup" />
-            </div>
+        <div>
+            <input type="hidden" name="next" value="/" />
+            <input type="submit" value="Close" class="btn btn-outline-dark close-popup" />
         </div>
     </div>
 </div>
-{% for block in page_new %}
-    <div class="block-line">
-        <a href="{% url 'your_device' block.id %}" class="a-default">
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Device name</label>
-                <div class="col-md-20">
-                    {{ block.device_name }}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Serial Num</label>
-                <div class="col-md-20">
-                    {{ block.serial_num }}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Auth key</label>
-                <div class="col-md-20">
-                    {{ block.auth_key }}
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-md-3 lining control-label">Status</label>
-                <div class="col-md-20">
-                    {{ block.status }}
-                </div>
-            </div>
-        </a>
-    </div>
 
-{% endfor %}
-{% if page_new.has_other_pages %}
-    <div class="circle">
-        {% if page_new.has_previous %}
-        <a class="icon" href="?page={{ page_new.previous_page_number }}">&lt;</a>
-        {% endif %}
 
-        {% for p in page_new.paginator.page_range %}
-        {% if page_new.number == p %}
-        <a class="page-num">{{ p }}</a>
-        {% elif p >= page_new.number|add:-2 and  p <= page_new.number|add:2 %}
-        <a class="icon" href="?page={{ p }}">{{ p }}</a>
-        {% endif %}
+
+<div class="container">
+    <div class="row row-cols-3 row-cols-lg-3">
+        {% for block in page_new %}
+        <div class="col-lg-6 block-line">
+            <a href="{% url 'your_device' block.id %}" class="a-default">
+                <div class="row row-cols-2 mb-1">
+                    <label class="col-lg-6 control-label text-center">Device name</label>
+                    <div class="col-lg-4 lining">
+                        {{ block.device_name }}
+                    </div>
+                </div>
+                <div class="row row-cols-2 mb-1">
+                    <label class="col-lg-6 control-label text-center">Serial Num</label>
+                    <div class="col-lg-4 lining">
+                        {{ block.serial_num }}
+                    </div>
+                </div>
+                <div class="row row-cols-2 mb-1">
+                    <label class="col-lg-6 control-label text-center">Status</label>
+                    <div class="col-lg-4 lining">
+                        {{ block.status }}
+                    </div>
+                </div>
+            </a>
+        </div>
         {% endfor %}
-
-        {% if page_new.has_next %}
-        <a class="icon" href="?page={{ page_new.next_page_number }}">&gt;</a>
-        {% endif %}
     </div>
+</div>
+        
+
+{% if page_new.has_other_pages %}
+    <nav class="list-pages">
+        <ul>
+            {% if page_new.has_previous %}
+                <li class="page-num">
+                    <a href="?page={{ page_new.previous_page_number }}">&lt;</a>
+                </li>
+            {% endif %}
+
+            {% for p in page_new.paginator.page_range %}
+                {% if page_new.number == p %}
+                    <li class="page-num page-num-selected">{{ p }}</li>
+                {% elif p >= page_new.number|add:-2 and  p <= page_new.number|add:2 %}
+                    <li class="page-num">
+                        <a href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_new.has_next %}
+                <li class="page-num">
+                    <a href="?page={{ page_new.next_page_number }}">&gt;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
 {% endif %}
 {% endblock %}
 

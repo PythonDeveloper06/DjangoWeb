@@ -23,6 +23,7 @@ router.register(r'devices', DeviceViewSet)
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('seld/', views.seld, name='seld'),
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('login/', LoginView.as_view
@@ -61,8 +62,17 @@ urlpatterns = [
     path('api/v1.0/', include(router.urls)),
 
     path('profile/', views.profile, name='profile'),
-    path('change-password/', ChangePasswordView.as_view(), name='change_password'),
+    path('change_password/', ChangePasswordView.as_view(), name='change_password'),
+    path('your_device/<int:pk>/keys/', views.keys, name='keys'),
 
+    path('your_device/<int:device_id>/keys/<int:pk>/delete_key_form/', 
+         views.KeyDeleteView.as_view
+         (
+            extra_context= 
+            {'title': 'Delete your key', 'year' : datetime.now().year}
+         ),
+         name='delete_key_form'
+    ),
 ]
 
 if settings.DEBUG:

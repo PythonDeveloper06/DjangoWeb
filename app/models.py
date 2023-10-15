@@ -11,8 +11,7 @@ from django.contrib.auth.models import User
 
 class DeviceModel(models.Model):
     device_name = models.CharField(max_length=255)
-    serial_num = models.CharField(max_length=255)
-    auth_key = models.IntegerField(null=False)
+    serial_num = models.CharField(max_length=255, unique=True)
     status = models.CharField(max_length=10, default="Close")
     user = UserForeignKey(auto_user_add=True)
 
@@ -37,5 +36,12 @@ class Profile(models.Model):
             new_img = (100, 100)
             img.thumbnail(new_img)
             img.save(self.avatar.path)
+
+
+class Keys(models.Model):
+    key = models.CharField(max_length=4)
+    device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE, null=True)
+
+    objects = models.Manager()
 
 

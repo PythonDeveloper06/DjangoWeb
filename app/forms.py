@@ -1,18 +1,13 @@
 """
 Definition of forms.
 """
-import random
-import asyncio
-
 from django.contrib.auth.models import User
-from .models import Profile
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .utils import new_code
 from .models import *
 
 
@@ -57,11 +52,6 @@ class SignUpView(CreateView):
 
 # !!! My form !!!
 class AddDeviceModel(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['auth_key'].initial = new_code()
-
-
     class Meta:
         model = DeviceModel
         fields = '__all__'
@@ -75,15 +65,24 @@ class AddDeviceModel(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Serial number'
                 }),
-            'auth_key': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'A random code will be generated here',
-                'readonly': 'readonly',
-                }),
             'status': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Status'
                 }),
+            }
+
+
+class AddKeysModel(forms.ModelForm):
+    class Meta:
+        model = Keys
+        fields = '__all__'
+
+        widgets = {
+            'key': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'New key',
+                'type': 'number',
+                })
             }
 
 

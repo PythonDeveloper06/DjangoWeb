@@ -6,3 +6,5 @@ $('.open-popup').click(function (e) {
 $('.close-popup').click(function () {
     $('.popup-bg').fadeOut()
 });
+
+$('.hide-js').hide();

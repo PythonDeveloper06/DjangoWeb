@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+try:
+    from .dev_settings import *
+except ImportError:
+    from .production_settings import *
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
@@ -105,12 +107,11 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-        ]
+        ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
     }
 
 INTERNAL_IPS = ['127.0.0.1']
 
-try:
-    from .dev_settings import *
-except ImportError:
-    from .production_settings import *
+
