@@ -192,7 +192,7 @@
     <Content Include="app\templates\app\delete_form.html" />
     <Content Include="app\templates\app\your_device.html" />
     <Content Include="media\default.jpg" />
-    <Content Include="media\fon.jpg" />
+    <Content Include="media\SELD_Locker.jpg" />
     <Content Include="README.md" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
