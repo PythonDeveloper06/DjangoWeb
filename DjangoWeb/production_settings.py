@@ -14,6 +14,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['10.0.2.15', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['https://seld-lock.ru']
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
