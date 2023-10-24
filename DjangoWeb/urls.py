@@ -7,7 +7,7 @@ from datetime import datetime
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.urls import path, include
+from django.urls import base, path, include
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
@@ -18,7 +18,7 @@ from rest_framework import routers
 
 
 router = routers.SimpleRouter()
-router.register(r'devices', DeviceViewSet)
+router.register(r'devices', DeviceViewSet, basename='DeviceViewSet')
 
 
 urlpatterns = [

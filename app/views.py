@@ -72,7 +72,7 @@ class DeviceUpdateView(UpdateView):
     form_class = AddDeviceModel
 
 
-    def get(self, request, **kwargs):
+    def get(self, request):
         device_lock = self.model.objects.get(id=self.kwargs['pk'])
         form = self.form_class(initial=
                                    {

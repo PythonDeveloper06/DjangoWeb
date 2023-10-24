@@ -20,6 +20,11 @@ class DeviceModel(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('devices')
 
+    def get_queryset(self):
+        user = self.request.user
+        queryset = self.model.objects.filter(user=user)
+        return queryset
+
 
 class Profile(models.Model):
     bio = models.TextField(null=True)
@@ -39,7 +44,7 @@ class Profile(models.Model):
 
 
 class Keys(models.Model):
-    key = models.CharField(max_length=4)
+    key = models.IntegerField()
     device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE, null=True)
 
     objects = models.Manager()

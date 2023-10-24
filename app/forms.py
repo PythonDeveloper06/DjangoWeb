@@ -52,6 +52,8 @@ class SignUpView(CreateView):
 
 # !!! My form !!!
 class AddDeviceModel(forms.ModelForm):
+    serial_num = forms.CharField(min_length=12, max_length=12, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Serial number'}))
+
     class Meta:
         model = DeviceModel
         fields = '__all__'
@@ -61,10 +63,6 @@ class AddDeviceModel(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Device name'
                 }),
-            'serial_num': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Serial number'
-                }),
             'status': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Status'
@@ -73,17 +71,11 @@ class AddDeviceModel(forms.ModelForm):
 
 
 class AddKeysModel(forms.ModelForm):
+    key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'New key'}))
+
     class Meta:
         model = Keys
         fields = '__all__'
-
-        widgets = {
-            'key': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'New key',
-                'type': 'number',
-                })
-            }
 
 
 
