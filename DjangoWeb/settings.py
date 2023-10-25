@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'django_userforeignkey',
     'rest_framework',
     'debug_toolbar',
+    'rest_framework.authtoken',
+    'djoser'
 ]
 
 # Middleware framework
@@ -109,8 +111,16 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
         ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
-    }
+    'PAGE_SIZE': 10,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
 
 INTERNAL_IPS = ['127.0.0.1']
 

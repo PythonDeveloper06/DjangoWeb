@@ -1,24 +1,24 @@
 {% extends 'app/layout.html'%}
 
-{% block content %}
+{% block safe %}
 
 <h2>Your device</h2>
 <hr />
 <div class="block-form">
     <div class="form-group">
-        <label class="col-md-3 lining control-label">Device name</label>
+        <label class="col-md-3 control-label">Device name</label>
         <div class="col-md-20">
             {{ data.device_name }}
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-3 lining control-label">Serial Num</label>
+        <label class="col-md-3 control-label">Serial Num</label>
         <div class="col-md-20">
             {{ data.serial_num }}
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-3 lining control-label">Status</label>
+        <label class="col-md-3 control-label">Status</label>
         <div class="col-md-20">
             {{ data.status }}
         </div>

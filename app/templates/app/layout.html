@@ -22,12 +22,21 @@
 
         {% endblock %}
     </div>
+
+    {% if user.is_authenticated %}
+    <div class="container body-content">
+        {% block safe %}
+
+        {% endblock %}
+    </div>
+    {% endif %}
+
     <div>
         {% block background %}
 
         {% endblock %}
     </div>
-    
+
 
     <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/bootstrap.js' %}"></script>

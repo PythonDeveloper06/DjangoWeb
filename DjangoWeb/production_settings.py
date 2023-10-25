@@ -12,7 +12,7 @@ SECRET_KEY = 'c8554d2e-ff9e-4854-9f3c-d2b3bc1dc501'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['10.0.2.15', '127.0.0.1']
+ALLOWED_HOSTS = ['seld-lock.ru']
 
 CSRF_TRUSTED_ORIGINS = ['https://seld-lock.ru']
 
@@ -20,6 +20,11 @@ CSRF_TRUSTED_ORIGINS = ['https://seld-lock.ru']
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    '/var/www/static/',
+]
 
 MEDIA_ROOT = '/var/www/media/'
 MEDIA_URL = '/media/'

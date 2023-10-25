@@ -72,8 +72,9 @@ class DeviceUpdateView(UpdateView):
     form_class = AddDeviceModel
 
 
-    def get(self, request):
-        device_lock = self.model.objects.get(id=self.kwargs['pk'])
+    def get(self, request, pk):
+        device_lock = self.model.objects.get(id=pk)
+        print(device_lock)
         form = self.form_class(initial=
                                    {
                                        'device_name': device_lock.device_name, 
@@ -104,8 +105,8 @@ async def devices(request):
     if request.method == 'POST':
         form = AddDeviceModel(request.POST)
         if await sync_to_async(form.is_valid)():
-            if not await DeviceModel.objects.filter(device_name=form.cleaned_data['device_name']).aexists():
-                await sync_to_async(form.save)()
+            await sync_to_async(form.save)()
+
     form = AddDeviceModel()
     devices_numbers = await sync_to_async(DeviceModel.objects.filter)(user=request.user)
 
