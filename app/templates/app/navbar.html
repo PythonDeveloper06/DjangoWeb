@@ -23,7 +23,7 @@
                     <a class="nav-link text-white mx-2" href="{% url 'profile' %}">Аккаунт</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'logout' %}">Выйти</a>
+                    <a class="nav-link text-white mx-2" href="{% url 'log_out' %}">Выйти</a>
                 </li>
 
                 {% else %}
@@ -32,7 +32,7 @@
                     <a class="nav-link text-white mx-2" href="{% url 'signup' %}">Регистрация</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'login' %}">Вход</a>
+                    <a class="nav-link text-white mx-2" href="{% url 'log_in' %}">Вход</a>
                 </li>
 
                 {% endif %}

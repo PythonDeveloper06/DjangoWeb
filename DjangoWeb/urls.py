@@ -36,9 +36,9 @@ urlpatterns = [
              authentication_form=forms.BootstrapAuthenticationForm,
              extra_context={'title': 'Log in', 'year' : datetime.now().year}
          ), 
-         name='login'),
+         name='log_in'),
 
-    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='/'), name='log_out'),
 
     path('admin/', admin.site.urls),
 
@@ -89,7 +89,7 @@ urlpatterns = [
     ),
 
     path('api/v1.0/auth/', include('djoser.urls')),
-    re_path(r'^auth/', include('djoser.urls.authtoken')),
+    re_path(r'^auth', include('djoser.urls.authtoken')),
 
 
 ]
