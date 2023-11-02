@@ -1,8 +1,9 @@
 from datetime import datetime
+from http.client import HTTPResponse
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from asgiref.sync import sync_to_async
@@ -10,7 +11,8 @@ from django.contrib import messages
 
 from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysModel
 from .models import DeviceModel, Keys
-from django.views.generic import DetailView, UpdateView, DeleteView
+from django.views.generic import DetailView, UpdateView, DeleteView, ListView
+from django.views.generic.edit import FormMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -74,7 +76,6 @@ class DeviceUpdateView(UpdateView):
 
     def get(self, request, pk):
         device_lock = self.model.objects.get(id=pk)
-        print(device_lock)
         form = self.form_class(initial=
                                    {
                                        'device_name': device_lock.device_name, 
@@ -95,35 +96,31 @@ class DeviceDeleteView(DeleteView):
 class KeyDeleteView(DeleteView):
     model = Keys
     template_name = 'app/delete_key_form.html'
-    success_url = reverse_lazy('devices')
     context_object_name = 'data'
+
+    def get_success_url(self):
+        success_url = reverse_lazy('keys', args=[self.kwargs["device_id"]])
+        return success_url
     
 
 # !!! start of all work !!!
-async def devices(request):
-    """Renders and proccesing info the device page."""
-    if request.method == 'POST':
-        form = AddDeviceModel(request.POST)
-        if await sync_to_async(form.is_valid)():
-            await sync_to_async(form.save)()
+class DevicesListView(ListView, FormMixin):
+    model = DeviceModel
+    template_name = 'app/devices.html'
+    context_object_name = 'data'
+    paginate_by = 3
+    form_class = AddDeviceModel
+    success_url = reverse_lazy('devices')
 
-    form = AddDeviceModel()
-    devices_numbers = await sync_to_async(DeviceModel.objects.filter)(user=request.user)
+    def get_queryset(self):
+        return DeviceModel.objects.filter(user=self.request.user)
 
-    paginator = await sync_to_async(Paginator)(devices_numbers, 3)
-    page_number = await sync_to_async(request.GET.get)('page')
-    page_obj = await sync_to_async(paginator.get_page)(page_number)
-
-    return await sync_to_async(render)(
-        request,
-        'app/devices.html',
-        {
-            'title':'Your devices',
-            'form': form,
-            'year': datetime.now().year,
-            'page_new': page_obj
-        }
-    )
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse_lazy('devices'))
+        return HttpResponseRedirect(reverse_lazy('devices'))
 
 
 @login_required
@@ -153,10 +150,20 @@ class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
     extra_context = {'year': datetime.now().year}
 
 
-def keys(request, pk):
-    """Renders and proccesing info the key`s page."""
-    device_lock = DeviceModel.objects.get(id=pk)
-    if request.method == 'POST':
+class KeysListView(ListView, FormMixin):
+    model = DeviceModel
+    template_name = 'app/keys.html'
+    context_object_name = 'data'
+    paginate_by = 3
+    form_class = AddKeysModel
+    extra_context = {'title': 'Your keys'}
+
+    def get_queryset(self):
+        return Keys.objects.filter(device_id=self.kwargs['pk'])
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])
         form = AddKeysModel({
             'key': request.POST['key'],
             'device': device_lock
@@ -164,20 +171,5 @@ def keys(request, pk):
         if form.is_valid():
             if not Keys.objects.filter(key=request.POST['key']).exists():
                 form.save()
-    form = AddKeysModel()
-    devices_numbers = Keys.objects.filter(device_id=pk)
-
-    paginator = Paginator(devices_numbers, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return render(
-        request,
-        'app/keys.html',
-        {
-            'title':'Your keys',
-            'form': form,
-            'year': datetime.now().year,
-            'page_new': page_obj
-        }
-    )
+            return HttpResponseRedirect(reverse_lazy('keys', args=[self.kwargs["pk"]]))
+        return HttpResponseRedirect(reverse_lazy('devices'))

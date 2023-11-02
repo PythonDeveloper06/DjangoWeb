@@ -42,7 +42,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('devices/', views.devices, name="devices"),
+    path('devices/', views.DevicesListView.as_view(extra_context= {'title': 'Your devices', 'year' : datetime.now().year}), name="devices"),
 
     path('your_device/<int:pk>/update_form/', views.DeviceUpdateView.as_view
          (
@@ -77,7 +77,7 @@ urlpatterns = [
 
     path('change_password/', ChangePasswordView.as_view(), name='change_password'),
 
-    path('your_device/<int:pk>/keys/', views.keys, name='keys'),
+    path('your_device/<int:pk>/keys/', views.KeysListView.as_view(), name='keys'),
 
     path('your_device/<int:device_id>/keys/<int:pk>/delete_key_form/', 
          views.KeyDeleteView.as_view
@@ -89,7 +89,7 @@ urlpatterns = [
     ),
 
     path('api/v1.0/auth/', include('djoser.urls')),
-    re_path(r'^auth', include('djoser.urls.authtoken')),
+    re_path(r'^auth/', include('djoser.urls.authtoken')),
 
 
 ]
