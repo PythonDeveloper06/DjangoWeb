@@ -118,7 +118,8 @@ class DevicesListView(ListView, FormMixin):
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-            form.save()
+            if not self.model.objects.filter(serial_num=request.POST['serial_num']).exists():
+                form.save()
             return HttpResponseRedirect(reverse_lazy('devices'))
         return HttpResponseRedirect(reverse_lazy('devices'))
 
@@ -169,7 +170,8 @@ class KeysListView(ListView, FormMixin):
             'device': device_lock
             })
         if form.is_valid():
-            if not Keys.objects.filter(key=request.POST['key']).exists():
+            print(request.POST)
+            if not Keys.objects.filter(device_id=device_lock).exists():
                 form.save()
             return HttpResponseRedirect(reverse_lazy('keys', args=[self.kwargs["pk"]]))
         return HttpResponseRedirect(reverse_lazy('devices'))

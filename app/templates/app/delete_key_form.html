@@ -10,6 +10,5 @@
     {% csrf_token %}
     <button type="submit" class="btn btn-default">Delete</button>
     <a href="{% url 'keys' data.device_id %}" class=" col-md-offset-2 btn btn-default">Return to page</a>
-    <h1>{{ data.device_id }}</h1>
 </form>
 {% endblock %}
