@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'debug_toolbar',
     'rest_framework.authtoken',
-    'djoser'
+    'djoser',
 ]
 
 # Middleware framework
@@ -70,7 +70,18 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'DjangoWeb.wsgi.application'
-# Database
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
+
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASES = {
     'default': {
@@ -123,5 +134,20 @@ REST_FRAMEWORK = {
 }
 
 INTERNAL_IPS = ['127.0.0.1']
+
+if os.name == 'nt':
+    CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": os.path.join(BASE_DIR, 'django_cache'),
+    }
+}
+else:
+    CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": "/var/www/django_cache",
+    }
+}
 
 

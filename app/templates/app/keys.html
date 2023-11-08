@@ -19,8 +19,8 @@
             <h4 align="center">Add new keys</h4>
             <hr />
             <div class="form-group">
-                <label class="col-md-3 lining control-label">Key</label>
-                <div class="col-md-20">
+                <label class="col-lg-3 lining control-label">Key</label>
+                <div class="col-lg-8">
                     {{ form.key }}
                 </div>
             </div>
@@ -44,8 +44,8 @@
 <div class="block-line">
     <a href="{% url 'delete_key_form' block.device_id block.id %}" class="a-default">
         <div class="form-group">
-            <label class="col-md-3 lining control-label">Key</label>
-            <div class="col-md-20">
+            <label class="col-lg-3 lining control-label">Key</label>
+            <div class="col-lg-8">
                 {{ block.key }}
             </div>
         </div>
@@ -80,9 +80,7 @@
 
 {% block scripts %}
 
-    {% load static %}
-<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
-<script src="{% static 'app/scripts/jquery-1.10.2.min.js' %}"></script>
+{% load static %}
 <script src="{% static 'app/scripts/main.js' %}"></script>
 
 {% endblock %}

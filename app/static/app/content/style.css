@@ -2,7 +2,6 @@ h2 {
     margin: 10px 0 0 0;
 }
 
-
 .popup-bg {
     position: absolute;
     width: 100%;
@@ -32,12 +31,6 @@ h2 {
     right: 5px;
 }
 
-.close-popup-key {
-    position: absolute;
-    top: 80%;
-    right: 10px;
-}
-
 .lining {
     text-align: center;
 }
@@ -46,7 +39,7 @@ h2 {
     border-radius: 10px;
     border: 1px solid black;
     padding: 10px;
-    width: 30%;
+    width: 50vh;
     margin: 5px 0 10px 10px;
     cursor: pointer;
     color: #333333;
@@ -183,4 +176,10 @@ fieldset[disabled] .a-default.active {
 .banner {
     height: 100vh;
     background: linear-gradient(#000080, #00FFFF);
+    background-size: cover;
+}
+
+.container .dvcs {
+    display: grid;
+    grid-template-rows: repeat(1, 1fr);
 }

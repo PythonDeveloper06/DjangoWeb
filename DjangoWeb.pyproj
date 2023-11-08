@@ -107,6 +107,7 @@
     <Folder Include="app\templates\app\" />
     <Folder Include="DjangoWeb\" />
     <Folder Include="media\" />
+    <Folder Include="django_cache\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\content\style.css" />

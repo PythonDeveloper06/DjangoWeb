@@ -15,7 +15,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-white mx-2" href="{% url 'contact' %}">Контакты</a>
                 </li>
+
                 {% if user.is_authenticated %}
+
                 <li class="nav-item">
                     <a class="nav-link text-white mx-2" href="{% url 'devices' %}">Устройства</a>
                 </li>

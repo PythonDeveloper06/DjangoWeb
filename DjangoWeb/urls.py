@@ -3,6 +3,7 @@ Definition of urls for DjangoWeb.
 """
 
 from datetime import datetime
+from functools import cache
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -15,6 +16,8 @@ from app.forms import SignUpView
 from app.api import DeviceViewSet
 from app.views import ChangePasswordView
 from rest_framework import routers
+
+from django.views.decorators.cache import cache_page
 
 
 router = routers.SimpleRouter()
@@ -42,7 +45,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('devices/', views.DevicesListView.as_view(extra_context= {'title': 'Your devices', 'year' : datetime.now().year}), name="devices"),
+    path('devices/', cache_page(60)(views.DevicesListView.as_view(extra_context= {'title': 'Your devices', 'year' : datetime.now().year})), name="devices"),
 
     path('your_device/<int:pk>/update_form/', views.DeviceUpdateView.as_view
          (
@@ -90,7 +93,6 @@ urlpatterns = [
 
     path('api/v1.0/auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
-
 
 ]
 

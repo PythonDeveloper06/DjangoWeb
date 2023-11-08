@@ -3,7 +3,7 @@ from http.client import HTTPResponse
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponseRedirect, HttpResponse
+from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from asgiref.sync import sync_to_async
@@ -15,6 +15,7 @@ from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.decorators.cache import cache_page
 
 # !!! basic views !!!
 def home(request):
@@ -29,6 +30,7 @@ def home(request):
         }
     )
 
+@cache_page(60 * 60)
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
@@ -42,6 +44,7 @@ def contact(request):
         }
     )
 
+@cache_page(60 * 60)
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
@@ -55,6 +58,7 @@ def about(request):
         }
     )
 
+@cache_page(60 * 60)
 def seld(request):
     """Renders the SELD page."""
     assert isinstance(request, HttpRequest)
@@ -104,24 +108,16 @@ class KeyDeleteView(DeleteView):
     
 
 # !!! start of all work !!!
-class DevicesListView(ListView, FormMixin):
+class DevicesListView(ListView):
     model = DeviceModel
     template_name = 'app/devices.html'
     context_object_name = 'data'
-    paginate_by = 3
+    paginate_by = 6
     form_class = AddDeviceModel
     success_url = reverse_lazy('devices')
 
     def get_queryset(self):
         return DeviceModel.objects.filter(user=self.request.user)
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if form.is_valid():
-            if not self.model.objects.filter(serial_num=request.POST['serial_num']).exists():
-                form.save()
-            return HttpResponseRedirect(reverse_lazy('devices'))
-        return HttpResponseRedirect(reverse_lazy('devices'))
 
 
 @login_required

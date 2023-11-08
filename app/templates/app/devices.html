@@ -4,60 +4,12 @@
 
 <h2>{{ title }}</h2>
 <h3>Here you can add your devices</h3>
-<div class="form-group">
-    <div>
-        <input type="hidden" name="next" value="/" />
-        <input type="submit" value="Add new device" class="btn btn-outline-dark open-popup" />
-    </div>
-</div>
 <hr />
 
-<div class="popup-bg">
-    <div class="popup">
-        <form method="post" class="form-horizontal">
-            {% csrf_token %}
-            <h4 align="center">Add new devices</h4>
-            <hr />
-            <div class="row row-cols-2 mb-2">
-                <label class="col-lg-3 control-label text-center">Device name</label>
-                <div class="col-lg-9">
-                    {{ form.device_name }}
-                </div>
-            </div>
-            <div class="row row-cols-2 mb-2">
-                <label class="col-lg-3 control-label text-center">Serial Num</label>
-                <div class="col-lg-9">
-                    {{ form.serial_num }}
-                </div>
-            </div>
-            <div class="row row-cols-2 mb-2">
-                <label class="col-lg-3 control-label text-center">Status</label>
-                <div class="col-lg-9">
-                    {{ form.status }}
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center">
-                        <input type="hidden" name="next" value="/" />
-                        <input type="submit" value="Add" class="btn btn-outline-dark" />
-                    </div>
-                </div>
-            </div>
-        </form>
-        <div>
-            <input type="hidden" name="next" value="/" />
-            <input type="submit" value="Close" class="btn btn-outline-dark close-popup" />
-        </div>
-    </div>
-</div>
-
-
-
-<div class="container">
-    <div class="row row-cols-3 row-cols-lg-3">
+<div class="container dvcs">
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
         {% for block in data %}
-        <div class="col-lg-6 block-line">
+        <div class="block-line">
             <a href="{% url 'your_device' block.id %}" class="a-default">
                 <div class="row row-cols-2 mb-1">
                     <label class="col-lg-6 control-label text-center">Device name</label>
@@ -83,6 +35,8 @@
     </div>
 </div>
 
+
+
 {% if is_paginated %}
 <nav class="list-pages">
     <ul>
@@ -104,14 +58,5 @@
     </ul>
 </nav>
 {% endif %}
-{% endblock %}
-
-
-{% block scripts %}
-
-    {% load static %}
-<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
-<script src="{% static 'app/scripts/jquery-1.10.2.min.js' %}"></script>
-<script src="{% static 'app/scripts/main.js' %}"></script>
 
 {% endblock %}
