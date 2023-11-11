@@ -2,6 +2,7 @@
 Definition of models.
 """
 from PIL import Image
+import datetime
 
 from django.db import models
 from django.urls import reverse_lazy
@@ -13,6 +14,8 @@ class DeviceModel(models.Model):
     device_name = models.CharField(max_length=255)
     serial_num = models.CharField(max_length=255, unique=True)
     status = models.CharField(max_length=10, default="Close")
+    settings = models.CharField(max_length=255, default='-')
+    admin = models.CharField(max_length=10, default='Off')
     user = UserForeignKey(auto_user_add=True)
 
     objects = models.Manager()
@@ -42,11 +45,17 @@ class Profile(models.Model):
             img.thumbnail(new_img)
             img.save(self.avatar.path)
 
-
+            
 class Keys(models.Model):
+    USED_CHOICES = [
+        ('C', 'Constant'), 
+        ('T', 'Temporary'), 
+        ('O', 'One use')
+    ]
+
     key = models.IntegerField()
+    used = models.CharField(max_length=10, choices=USED_CHOICES, default='T')
+    time = models.CharField(max_length=10, default='-')
     device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE, null=True)
 
     objects = models.Manager()
-
-

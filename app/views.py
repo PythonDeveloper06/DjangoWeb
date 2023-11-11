@@ -30,7 +30,7 @@ def home(request):
         }
     )
 
-@cache_page(60 * 60)
+
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
@@ -44,7 +44,7 @@ def contact(request):
         }
     )
 
-@cache_page(60 * 60)
+
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
@@ -58,7 +58,7 @@ def about(request):
         }
     )
 
-@cache_page(60 * 60)
+
 def seld(request):
     """Renders the SELD page."""
     assert isinstance(request, HttpRequest)
@@ -151,7 +151,7 @@ class KeysListView(ListView, FormMixin):
     model = DeviceModel
     template_name = 'app/keys.html'
     context_object_name = 'data'
-    paginate_by = 3
+    paginate_by = 6
     form_class = AddKeysModel
     extra_context = {'title': 'Your keys'}
 
@@ -163,11 +163,12 @@ class KeysListView(ListView, FormMixin):
         device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])
         form = AddKeysModel({
             'key': request.POST['key'],
+            'used': request.POST['used'],
+            'time': request.POST['time'],
             'device': device_lock
             })
         if form.is_valid():
-            print(request.POST)
-            if not Keys.objects.filter(device_id=device_lock).exists():
+            if not Keys.objects.filter(key=request.POST['key']):
                 form.save()
             return HttpResponseRedirect(reverse_lazy('keys', args=[self.kwargs["pk"]]))
         return HttpResponseRedirect(reverse_lazy('devices'))

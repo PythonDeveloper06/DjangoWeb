@@ -21,9 +21,5 @@ CSRF_TRUSTED_ORIGINS = ['https://seld-lock.ru']
 STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/static/'
 
-STATICFILES_DIRS = [
-    '/var/www/static/',
-]
-
 MEDIA_ROOT = '/var/www/media/'
 MEDIA_URL = '/media/'

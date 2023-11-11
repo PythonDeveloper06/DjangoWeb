@@ -1,6 +1,7 @@
 """
 Definition of forms.
 """
+from email.policy import default
 from django.contrib.auth.models import User
 
 from django import forms
@@ -69,13 +70,30 @@ class AddDeviceModel(forms.ModelForm):
                 }),
             }
 
+USED_CHOICES = (
+    ('C', 'Constant'), 
+    ('T', 'Temporary'), 
+    ('O', 'One use')
+)
 
 class AddKeysModel(forms.ModelForm):
-    key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'New key'}))
+    key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Key'}))
+
 
     class Meta:
         model = Keys
         fields = '__all__'
+
+        widgets = {
+            'used': forms.Select(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Used'
+                }),
+            'time': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Time'
+                }),
+            }
 
 
 
