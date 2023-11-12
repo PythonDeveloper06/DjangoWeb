@@ -83,7 +83,6 @@
     <Folder Include="app\static\assets\img\icons\" />
     <Folder Include="app\static\assets\img\illustrations\" />
     <Folder Include="app\static\assets\js\" />
-    <Folder Include="app\static\image\" />
     <Folder Include="app\static\vendors\" />
     <Folder Include="app\static\vendors\anchorjs\" />
     <Folder Include="app\static\vendors\bigpicture\" />
@@ -149,7 +148,6 @@
     <Content Include="app\static\assets\js\theme.js.map" />
     <Content Include="app\static\assets\js\theme.min.js" />
     <Content Include="app\static\assets\js\theme.min.js.map" />
-    <Content Include="app\static\image\lock_square.jpg" />
     <Content Include="app\static\vendors\anchorjs\anchor.min.js" />
     <Content Include="app\static\vendors\bigpicture\BigPicture.js" />
     <Content Include="app\static\vendors\bootstrap\bootstrap.min.js" />

@@ -202,3 +202,8 @@ fieldset[disabled] .a-default.active {
     display: flex;
     justify-content: center;
 }
+
+.child {
+    display: flex;
+    justify-content: center;
+}

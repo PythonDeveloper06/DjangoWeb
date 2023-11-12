@@ -19,29 +19,27 @@
             {% csrf_token %}
             <h4 align="center">Add new keys</h4>
             <hr />
-            <div class="row row-cols-2 mb-2">
-                <label class="col-lg-3 control-label text-center">Key</label>
-                <div class="col-lg-9">
+            <div class="row row-cols-1 row-cols-lg-2 mb-2">
+                <label class="col-lg-3 control-label text-center mb-1">Key</label>
+                <div class="col-lg-9 child">
                     {{ form.key }}
                 </div>
             </div>
-            <div class="row row-cols-2 mb-2">
-                <label class="col-lg-3 control-label text-center">Used</label>
-                <div class="col-lg-9">
+            <div class="row row-cols-1 row-cols-lg-2 mb-2">
+                <label class="col-lg-3 control-label text-center mb-1">Used</label>
+                <div class="col-lg-9 child">
                     {{ form.used }}
                 </div>
             </div>
-            <div class="row row-cols-2 mb-2">
-                <label class="col-lg-3 control-label text-center">Time</label>
-                <div class="col-lg-9">
+            <div class="row row-cols-1 row-cols-lg-2 mb-2">
+                <label class="col-lg-3 control-label text-center mb-1">Time</label>
+                <div class="col-lg-9 child">
                     {{ form.time }}
                 </div>
             </div>
-            <div class="row">
-                    <div class="parent">
-                        <button type="submit" class="btn btn-outline-dark col-lg-5 col" style="margin-right: 10px">Add</button>
-                        <button type="submit" class="btn btn-outline-dark close-popup col-lg-5 col">Close</button>
-                    </div>
+            <div class="d-grid gap-2 col-lg-8 col-10 mx-auto">
+                        <button type="submit" class="btn btn-outline-dark">Add</button>
+                        <button type="submit" class="btn btn-outline-dark close-popup">Close</button>
                 </div>
         </form>
     </div>
