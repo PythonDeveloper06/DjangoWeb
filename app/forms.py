@@ -1,7 +1,8 @@
 """
 Definition of forms.
 """
-from email.policy import default
+from math import radians
+import random
 from django.contrib.auth.models import User
 
 from django import forms
@@ -76,7 +77,22 @@ USED_CHOICES = (
     ('O', 'One use')
 )
 
+
+NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
+
+def new_code():
+    """Generate code"""
+    number = random.randint(4, 16)
+    rand_number = int(''.join(random.choices(NUMBERS, k=number)))
+    return rand_number
+
+
 class AddKeysModel(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['key'].initial = new_code()
+
+
     key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Key'}))
 
 
