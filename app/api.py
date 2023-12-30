@@ -17,6 +17,7 @@ class DeviceViewSet(ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def keys(self, request, serial_num=None):
-        keys = Keys.objects.all()
+        device_lock = DeviceModel.objects.get(serial_num=serial_num)
+        keys = Keys.objects.filter(device_id=device_lock.id)
         return Response({'keys': keys.values()})
 

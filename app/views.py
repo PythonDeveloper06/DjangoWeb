@@ -1,12 +1,9 @@
 from datetime import datetime
-from http.client import HTTPResponse
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.core.paginator import Paginator
-from asgiref.sync import sync_to_async
 from django.contrib import messages
 
 from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysModel
@@ -15,7 +12,6 @@ from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views.decorators.cache import cache_page
 
 # !!! basic views !!!
 def home(request):
@@ -26,7 +22,7 @@ def home(request):
         'app/index.html',
         {
             'title':'Home Page',
-            'year':datetime.now().year,
+            'year': datetime.now().year,
         }
     )
 
@@ -40,7 +36,7 @@ def contact(request):
         {
             'title':'Contact',
             'message':'Your contact page.',
-            'year':datetime.now().year,
+            'year': datetime.now().year,
         }
     )
 
@@ -54,7 +50,7 @@ def about(request):
         {
             'title':'About',
             'message':'Your application description page.',
-            'year':datetime.now().year,
+            'year': datetime.now().year,
         }
     )
 
@@ -77,17 +73,18 @@ class DeviceUpdateView(UpdateView):
     template_name = 'app/update_form.html'
     form_class = AddDeviceModel
 
+    def post(self, request, **kwargs):
+        device_lock = self.model.objects.get(id=self.kwargs['pk'])
 
-    def get(self, request, pk):
-        device_lock = self.model.objects.get(id=pk)
-        form = self.form_class(initial=
-                                   {
-                                       'device_name': device_lock.device_name, 
-                                       'serial_num': device_lock.serial_num, 
-                                       'status': device_lock.status
-                                   })
-        form.fields['serial_num'].widget.attrs['readonly'] = True
-        return render(request, 'app/update_form.html', {'title':'Update your device', 'form': form, 'year': datetime.now().year})
+        request.POST = request.POST.copy()
+        request.POST['serial_num'] = device_lock.serial_num
+        request.POST['settings'] = device_lock.settings
+        request.POST['admin'] = device_lock.admin
+        request.POST['sync'] = device_lock.sync
+        request.POST['user'] = self.request.user
+
+
+        return super(DeviceUpdateView, self).post(request, **kwargs)
     
 
 class DeviceDeleteView(DeleteView):
@@ -112,11 +109,12 @@ class DevicesListView(ListView):
     model = DeviceModel
     template_name = 'app/devices.html'
     context_object_name = 'data'
+    from_class = AddDeviceModel
     paginate_by = 6
-    form_class = AddDeviceModel
     success_url = reverse_lazy('devices')
 
     def get_queryset(self):
+        print(self.request.META)
         return DeviceModel.objects.filter(user=self.request.user)
 
 

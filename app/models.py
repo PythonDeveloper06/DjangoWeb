@@ -16,6 +16,7 @@ class DeviceModel(models.Model):
     status = models.CharField(max_length=10, default="Close")
     settings = models.CharField(max_length=255, default='-')
     admin = models.CharField(max_length=10, default='Off')
+    sync = models.CharField(max_length=10, default='False')
     user = UserForeignKey(auto_user_add=True)
 
     objects = models.Manager()

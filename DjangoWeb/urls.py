@@ -45,7 +45,7 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-    path('devices/', cache_page(60)(views.DevicesListView.as_view(extra_context= {'title': 'Your devices', 'year' : datetime.now().year})), name="devices"),
+    path('devices/', views.DevicesListView.as_view(extra_context= {'title': 'Your devices', 'year' : datetime.now().year}), name="devices"),
 
     path('your_device/<int:pk>/update_form/', views.DeviceUpdateView.as_view
          (
