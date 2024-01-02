@@ -1,18 +1,19 @@
-from datetime import datetime
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysModel
-from .models import DeviceModel, Keys
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 
+from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysModel
+from .models import DeviceModel, Keys
+
+from datetime import datetime
 # !!! basic views !!!
 def home(request):
     """Renders the home page."""
@@ -62,13 +63,13 @@ def seld(request):
 
 
 # !!! Class Basic Views !!!
-class DeviceDetailView(DetailView):
+class DeviceDetailView(LoginRequiredMixin, DetailView):
     model = DeviceModel
     template_name = 'app/your_device.html'
     context_object_name = 'data'
 
 
-class DeviceUpdateView(UpdateView):
+class DeviceUpdateView(LoginRequiredMixin, UpdateView):
     model = DeviceModel
     template_name = 'app/update_form.html'
     form_class = AddDeviceModel
@@ -87,14 +88,14 @@ class DeviceUpdateView(UpdateView):
         return super(DeviceUpdateView, self).post(request, **kwargs)
     
 
-class DeviceDeleteView(DeleteView):
+class DeviceDeleteView(LoginRequiredMixin, DeleteView):
     model = DeviceModel
     template_name = 'app/delete_form.html'
     success_url = reverse_lazy('devices')
     context_object_name = 'data'
 
 
-class KeyDeleteView(DeleteView):
+class KeyDeleteView(LoginRequiredMixin, DeleteView):
     model = Keys
     template_name = 'app/delete_key_form.html'
     context_object_name = 'data'
@@ -105,7 +106,7 @@ class KeyDeleteView(DeleteView):
     
 
 # !!! start of all work !!!
-class DevicesListView(ListView):
+class DevicesListView(LoginRequiredMixin, ListView):
     model = DeviceModel
     template_name = 'app/devices.html'
     context_object_name = 'data'
@@ -114,7 +115,6 @@ class DevicesListView(ListView):
     success_url = reverse_lazy('devices')
 
     def get_queryset(self):
-        print(self.request.META)
         return DeviceModel.objects.filter(user=self.request.user)
 
 
@@ -138,14 +138,14 @@ def profile(request):
     return render(request, 'app/profile.html', {'user_form': user_form, 'profile_form': profile_form, 'title': 'Profile', 'year': datetime.now().year})
 
 
-class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
     template_name = 'app/change_password.html'
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('profile')
     extra_context = {'year': datetime.now().year}
 
 
-class KeysListView(ListView, FormMixin):
+class KeysListView(LoginRequiredMixin, ListView, FormMixin):
     model = DeviceModel
     template_name = 'app/keys.html'
     context_object_name = 'data'

@@ -37,11 +37,13 @@
                     {{ form.time }}
                 </div>
             </div>
-            <div class="d-grid gap-2 col-lg-8 col-10 mx-auto">
-                        <button type="submit" class="btn btn-outline-dark">Add</button>
-                        <button type="submit" class="btn btn-outline-dark close-popup">Close</button>
+            <div class="d-grid gap-2 col-lg-8 col-10 mx-auto mb-1">
+                <button type="submit" class="btn btn-outline-dark">Add</button>
             </div>
         </form>
+        <div class="d-grid gap-2 col-lg-8 col-10 mx-auto">
+            <button type="submit" class="btn btn-outline-dark close-popup">Close</button>
+        </div>
     </div>
 </div>
 
@@ -102,8 +104,6 @@
 {% block scripts %}
 
 {% load static %}
-<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
-<script src="{% static 'app/scripts/jquery-1.10.2.min.js' %}"></script>
 <script src="{% static 'app/scripts/main.js' %}"></script>
 
 {% endblock %}

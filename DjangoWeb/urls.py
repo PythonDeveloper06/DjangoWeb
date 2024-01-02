@@ -3,7 +3,6 @@ Definition of urls for DjangoWeb.
 """
 
 from datetime import datetime
-from functools import cache
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -16,8 +15,6 @@ from app.forms import SignUpView
 from app.api import DeviceViewSet
 from app.views import ChangePasswordView
 from rest_framework import routers
-
-from django.views.decorators.cache import cache_page
 
 
 router = routers.SimpleRouter()

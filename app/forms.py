@@ -1,9 +1,9 @@
 """
 Definition of forms.
 """
-from math import radians
 import random
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -80,6 +80,8 @@ USED_CHOICES = (
 
 NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
 
+DT = timezone.make_aware(datetime.datetime.now(), timezone=timezone.get_current_timezone())
+
 def new_code():
     """Generate code"""
     number = random.randint(4, 16)
@@ -90,11 +92,12 @@ def new_code():
 class AddKeysModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        print(DT)
         self.fields['key'].initial = new_code()
 
 
     key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Key'}))
-
+    time = forms.DateTimeField(initial=DT, required=True, widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Time'}))
 
     class Meta:
         model = Keys
@@ -104,11 +107,7 @@ class AddKeysModel(forms.ModelForm):
             'used': forms.Select(attrs={
                 'class': 'form-control', 
                 'placeholder': 'Used'
-                }),
-            'time': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Time'
-                }),
+                })
             }
 
 

@@ -56,7 +56,7 @@ class Keys(models.Model):
 
     key = models.IntegerField()
     used = models.CharField(max_length=10, choices=USED_CHOICES, default='T')
-    time = models.CharField(max_length=10, default='-')
+    time = models.DateTimeField()
     device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE, null=True)
 
     objects = models.Manager()
