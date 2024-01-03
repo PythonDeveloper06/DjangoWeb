@@ -5,30 +5,26 @@
 <hr />
 
 {% for msg in messages %}
-{% if msg.tags == 'error' %}
-<div class="alert alert-danger alert-dismissible" role="alert">
-    {{ msg }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% else %}
-<div class="alert alert-success alert-dismissible" role="alert">
-    {{ msg }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% endif %}
+    {% if msg.tags == 'error' %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% else %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
 {% endfor %}
 
 <div class="row">
-    <img class="col-md-offset-2 rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="cursor: pointer;" />
+    <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="cursor: pointer;" />
 </div>
 
 <hr />
 
-<form method="post" enctype="multipart/form-data" class="form-horizontal">
+<form method="post" class="form-horizontal">
     {% csrf_token %}
     <div class="form-group">
         <label class="col-md-1 control-label">Username</label>
@@ -59,4 +55,4 @@
     </div>
 </form>
 
-{% endblock content %}
+{% endblock %}

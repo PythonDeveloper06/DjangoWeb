@@ -14,7 +14,9 @@ from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysMod
 from .models import DeviceModel, Keys
 
 from datetime import datetime
-# !!! basic views !!!
+
+
+# !----- basic views -----!
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -62,7 +64,19 @@ def seld(request):
     return render(request, 'app/seld.html', {'title': 'SELD'})
 
 
-# !!! Class Basic Views !!!
+# !----- devices -----!
+# !!! start of all work !!!
+class DevicesListView(LoginRequiredMixin, ListView):
+    model = DeviceModel
+    template_name = 'app/devices.html'
+    context_object_name = 'data'
+    from_class = AddDeviceModel
+    paginate_by = 6
+
+    def get_queryset(self):
+        return DeviceModel.objects.filter(user=self.request.user)
+
+
 class DeviceDetailView(LoginRequiredMixin, DetailView):
     model = DeviceModel
     template_name = 'app/your_device.html'
@@ -84,7 +98,6 @@ class DeviceUpdateView(LoginRequiredMixin, UpdateView):
         request.POST['sync'] = device_lock.sync
         request.POST['user'] = self.request.user
 
-
         return super(DeviceUpdateView, self).post(request, **kwargs)
     
 
@@ -95,6 +108,35 @@ class DeviceDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'data'
 
 
+# !----- keys -----!
+class KeysListView(LoginRequiredMixin, ListView, FormMixin):
+    model = DeviceModel
+    template_name = 'app/keys.html'
+    context_object_name = 'data'
+    paginate_by = 6
+    form_class = AddKeysModel
+    extra_context = {'title': 'Your keys'}
+
+    def get_queryset(self):
+        return Keys.objects.filter(device_id=self.kwargs['pk'])
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])
+        form = AddKeysModel({
+            'key': request.POST['key'],
+            'used': request.POST['used'],
+            'time': request.POST['time'],
+            'selection': request.POST['selection'],
+            'device': device_lock
+            })
+        if form.is_valid():
+            if not Keys.objects.filter(key=request.POST['key']):
+                form.save()
+            return HttpResponseRedirect(reverse_lazy('keys', args=[self.kwargs["pk"]]))
+        return HttpResponseRedirect(reverse_lazy('devices'))
+
+
 class KeyDeleteView(LoginRequiredMixin, DeleteView):
     model = Keys
     template_name = 'app/delete_key_form.html'
@@ -103,21 +145,9 @@ class KeyDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         success_url = reverse_lazy('keys', args=[self.kwargs["device_id"]])
         return success_url
-    
-
-# !!! start of all work !!!
-class DevicesListView(LoginRequiredMixin, ListView):
-    model = DeviceModel
-    template_name = 'app/devices.html'
-    context_object_name = 'data'
-    from_class = AddDeviceModel
-    paginate_by = 6
-    success_url = reverse_lazy('devices')
-
-    def get_queryset(self):
-        return DeviceModel.objects.filter(user=self.request.user)
 
 
+# !----- profile -----!
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -143,30 +173,3 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('profile')
     extra_context = {'year': datetime.now().year}
-
-
-class KeysListView(LoginRequiredMixin, ListView, FormMixin):
-    model = DeviceModel
-    template_name = 'app/keys.html'
-    context_object_name = 'data'
-    paginate_by = 6
-    form_class = AddKeysModel
-    extra_context = {'title': 'Your keys'}
-
-    def get_queryset(self):
-        return Keys.objects.filter(device_id=self.kwargs['pk'])
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])
-        form = AddKeysModel({
-            'key': request.POST['key'],
-            'used': request.POST['used'],
-            'time': request.POST['time'],
-            'device': device_lock
-            })
-        if form.is_valid():
-            if not Keys.objects.filter(key=request.POST['key']):
-                form.save()
-            return HttpResponseRedirect(reverse_lazy('keys', args=[self.kwargs["pk"]]))
-        return HttpResponseRedirect(reverse_lazy('devices'))

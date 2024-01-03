@@ -1,13 +1,13 @@
 """
 Definition of models.
 """
-from PIL import Image
-import datetime
-
+from collections import defaultdict
 from django.db import models
 from django.urls import reverse_lazy
 from django_userforeignkey.models.fields import UserForeignKey
 from django.contrib.auth.models import User
+
+from PIL import Image
 
 
 class DeviceModel(models.Model):
@@ -16,7 +16,7 @@ class DeviceModel(models.Model):
     status = models.CharField(max_length=10, default="Close")
     settings = models.CharField(max_length=255, default='-')
     admin = models.CharField(max_length=10, default='Off')
-    sync = models.CharField(max_length=10, default='False')
+    sync = models.CharField(max_length=5, default='False')
     user = UserForeignKey(auto_user_add=True)
 
     objects = models.Manager()
@@ -54,9 +54,21 @@ class Keys(models.Model):
         ('O', 'One use')
     ]
 
+    SELECT_CHOICES = [
+        ('-', '0'),
+        ('+1h', '1 hour'),
+        ('+1d', '1 day'),
+        ('+1w', '1 week'),
+        ('+2w', '2 month'),
+        ('+1m', '1 month'),
+        ('+2m', '2 month'),
+        ('+5m', '5 month'),
+    ]
+
     key = models.IntegerField()
     used = models.CharField(max_length=10, choices=USED_CHOICES, default='T')
     time = models.DateTimeField()
+    selection = models.CharField(max_length=100, choices=SELECT_CHOICES, default='-')
     device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE, null=True)
 
     objects = models.Manager()

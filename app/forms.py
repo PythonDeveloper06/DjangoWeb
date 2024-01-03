@@ -1,7 +1,6 @@
 """
 Definition of forms.
 """
-import random
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -12,7 +11,11 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import *
 
+import random
+import datetime
 
+
+# !----- Profile form -----!
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100,
                                required=True,
@@ -25,14 +28,14 @@ class UpdateUserForm(forms.ModelForm):
 
 class UpdateProfileForm(forms.ModelForm):
     avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
-    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
+    bio = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
 
     class Meta:
         model = Profile
         fields = ['avatar', 'bio']
 
 
-# !!! Login Users !!!
+# !----- Login Users -----!
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
@@ -45,17 +48,15 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'placeholder':'Password'}))
 
 
-# !!! Create Registration View !!!
+# !---- Registration View -----!
 class SignUpView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'app/signup.html'
 
 
-# !!! My form !!!
+# !---- Device form -----!
 class AddDeviceModel(forms.ModelForm):
-    serial_num = forms.CharField(min_length=12, max_length=12, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Serial number'}))
-
     class Meta:
         model = DeviceModel
         fields = '__all__'
@@ -71,16 +72,9 @@ class AddDeviceModel(forms.ModelForm):
                 }),
             }
 
-USED_CHOICES = (
-    ('C', 'Constant'), 
-    ('T', 'Temporary'), 
-    ('O', 'One use')
-)
-
 
 NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
 
-DT = timezone.make_aware(datetime.datetime.now(), timezone=timezone.get_current_timezone())
 
 def new_code():
     """Generate code"""
@@ -88,16 +82,16 @@ def new_code():
     rand_number = int(''.join(random.choices(NUMBERS, k=number)))
     return rand_number
 
-
+# !----- Key form -----!
 class AddKeysModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print(DT)
+        self.fields['time'].initial = timezone.make_aware(datetime.datetime.now(), timezone=timezone.get_current_timezone())
         self.fields['key'].initial = new_code()
 
 
     key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Key'}))
-    time = forms.DateTimeField(initial=DT, required=True, widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Time'}))
+    time = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Time'}))
 
     class Meta:
         model = Keys
@@ -107,6 +101,10 @@ class AddKeysModel(forms.ModelForm):
             'used': forms.Select(attrs={
                 'class': 'form-control', 
                 'placeholder': 'Used'
+                }),
+            'selection': forms.Select(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Quick selection'
                 })
             }
 
