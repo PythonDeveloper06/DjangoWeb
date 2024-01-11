@@ -9,20 +9,20 @@
 
 <form method="post" class="form-horizontal">
     {% csrf_token %}
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Device name</label>
-                    <div class="col-lg-4 lining">
-                        {{ form.device_name }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Status</label>
-                    <div class="col-lg-4 lining">
-                        {{ form.status }}
-                    </div>
-                </div>
-                <div class="d-grid gap-2 col-lg-8 col-10 mx-auto">
-                    <button type="submit" class="btn btn-outline-dark">Update</button>
-                </div>
+    <div class="row row-cols-2 mb-1">
+        <label class="col-lg-6 control-label text-center">Device name</label>
+        <div class="col-lg-4 lining">
+            {{ form.device_name }}
+        </div>
+    </div>
+    <div class="row row-cols-2 mb-1">
+        <label class="col-lg-6 control-label text-center">Status</label>
+        <div class="col-lg-4 lining">
+            {{ form.status }}
+        </div>
+    </div>
+    <div class="d-grid gap-2 col-lg-8 col-10 mx-auto">
+        <button type="submit" class="btn btn-outline-dark">Update</button>
+    </div>
 </form>
 {% endblock %}

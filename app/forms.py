@@ -11,8 +11,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import *
 
-import random
 import datetime
+from .others import new_code
 
 
 # !----- Profile form -----!
@@ -73,25 +73,18 @@ class AddDeviceModel(forms.ModelForm):
             }
 
 
-NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
 
-
-def new_code():
-    """Generate code"""
-    number = random.randint(4, 16)
-    rand_number = int(''.join(random.choices(NUMBERS, k=number)))
-    return rand_number
 
 # !----- Key form -----!
 class AddKeysModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['time'].initial = timezone.make_aware(datetime.datetime.now(), timezone=timezone.get_current_timezone())
+        self.fields['time_end'].initial = timezone.make_aware(datetime.datetime.now(), timezone=timezone.get_current_timezone())
         self.fields['key'].initial = new_code()
 
 
     key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Key'}))
-    time = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Time'}))
+    time_end = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Time'}))
 
     class Meta:
         model = Keys

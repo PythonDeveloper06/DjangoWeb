@@ -8,7 +8,7 @@
     <div>
         <button type="submit" class="btn btn-outline-dark open-popup">Add new keys for devices</button>
         <a href="{% url 'devices' %}" class="col-md-offset btn btn-outline-dark">Return to your devices</a>
-</div>
+    </div>
 </div>
 <hr />
 
@@ -33,7 +33,7 @@
             <div class="row row-cols-1 row-cols-lg-2 mb-2">
                 <label class="col-lg-3 control-label text-center mb-1">Time</label>
                 <div class="col-lg-9 child">
-                    {{ form.time }}
+                    {{ form.time_end }}
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-lg-2 mb-2">
@@ -53,33 +53,73 @@
 </div>
 
 <div class="container dvcs">
-    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
-        {% for block in data %}
-        <div class="block-line">
-            <a href="{% url 'delete_key_form' block.device_id block.id %}" class="a-default">
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Key</label>
-                    <div class="col-lg-6 lining">
-                        {{ block.key }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Used</label>
-                    <div class="col-lg-6 lining">
-                        {{ block.used }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Time</label>
-                    <div class="col-lg-6 lining">
-                        {{ block.time }}
-                    </div>
-                </div>
-            </a>
-        </div>
-        {% endfor %}
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3" id="keys-box">
     </div>
 </div>
+
+<script>
+
+    const keys_box = document.getElementById('keys-box')
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: '{% url "get_ajax" %}',
+            success: function (response) {
+                const data = response.keys
+                console.log(data)
+                data.forEach(block => {
+                    // block time
+                    var options = {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        timeZone: 'UTC'
+                    }
+
+                    let new_date = new Date(block.time_end)
+                    let date_end = new_date.toLocaleString('ru', options)
+                    // ---!!---
+                    let a_data = "{% url 'delete_key_form' device_id=987 pk=321 %}"
+                        .replace(/987/, block.device_id.toString())
+                        .replace(/321/, block.id.toString())
+                    
+                    keys_box.innerHTML += `
+                     <div class="block-line">
+                        <a href=${a_data} class="a-default">
+                            <div class="row row-cols-2 mb-1">
+                                <label class="col-lg-5 control-label text-center">Key</label>
+                                <div class="col-lg-7 lining">
+                                    ${ block.key }
+                                </div>
+                            </div>
+                            <div class="row row-cols-2 mb-1">
+                                <label class="col-lg-5 control-label text-center">Used</label>
+                                <div class="col-lg-7 lining">
+                                    ${ block.used }
+                                </div>
+                            </div>
+                            <div class="row row-cols-2 mb-1">
+                                <label class="col-lg-5 control-label text-center">End time</label>
+                                <div class="col-lg-7 lining">
+                                {% load l10n %}
+                                {% localize on %}
+                                    ${ date_end }
+                                {% endlocalize %}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    `
+                })
+            },
+            error: function (error) { console.log(error) }
+        })
+    })
+
+</script>
 
 {% if is_paginated %}
 <nav class="list-pages">

@@ -1,7 +1,6 @@
 """
 Definition of models.
 """
-from collections import defaultdict
 from django.db import models
 from django.urls import reverse_lazy
 from django_userforeignkey.models.fields import UserForeignKey
@@ -59,15 +58,13 @@ class Keys(models.Model):
         ('+1h', '1 hour'),
         ('+1d', '1 day'),
         ('+1w', '1 week'),
-        ('+2w', '2 month'),
-        ('+1m', '1 month'),
-        ('+2m', '2 month'),
-        ('+5m', '5 month'),
+        ('+2w', '2 week'), 
     ]
 
     key = models.IntegerField()
     used = models.CharField(max_length=10, choices=USED_CHOICES, default='T')
-    time = models.DateTimeField()
+    time_start = models.DateTimeField(null=True)
+    time_end = models.DateTimeField(null=True)
     selection = models.CharField(max_length=100, choices=SELECT_CHOICES, default='-')
     device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE, null=True)
 

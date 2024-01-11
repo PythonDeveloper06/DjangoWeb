@@ -46,6 +46,9 @@
     <Compile Include="app\apps.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="app\others.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="app\serializers.py">
       <SubType>Code</SubType>
     </Compile>

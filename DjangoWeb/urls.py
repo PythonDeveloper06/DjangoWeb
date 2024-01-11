@@ -89,8 +89,12 @@ urlpatterns = [
     ),
 
     path('api/v1.0/auth/', include('djoser.urls')),
+
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 
+
+    # !----- Ajax data -----!
+    path('get_counter/', views.get_counter, name='get_ajax'),
 ]
 
 if settings.DEBUG:

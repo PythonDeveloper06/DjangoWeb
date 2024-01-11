@@ -4,14 +4,17 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils import timezone
 
 from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysModel
 from .models import DeviceModel, Keys
+from .others import timepp
 
 from datetime import datetime
 
@@ -117,19 +120,26 @@ class KeysListView(LoginRequiredMixin, ListView, FormMixin):
     form_class = AddKeysModel
     extra_context = {'title': 'Your keys'}
 
-    def get_queryset(self):
-        return Keys.objects.filter(device_id=self.kwargs['pk'])
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])
+
+        time_end = request.POST['time_end']
+        slct = request.POST['selection']
+        time_d = timepp(time_end, slct)
+
+        print(time_d)
+
         form = AddKeysModel({
             'key': request.POST['key'],
             'used': request.POST['used'],
-            'time': request.POST['time'],
+            'time_start': timezone.make_aware(datetime.now(), timezone=timezone.get_current_timezone()),
+            'time_end': time_d,
             'selection': request.POST['selection'],
             'device': device_lock
             })
+
         if form.is_valid():
             if not Keys.objects.filter(key=request.POST['key']):
                 form.save()
@@ -173,3 +183,10 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     success_message = "Successfully Changed Your Password"
     success_url = reverse_lazy('profile')
     extra_context = {'year': datetime.now().year}
+
+
+# !---- Ajax data -----!
+def get_counter(request):
+    device_lock = DeviceModel.objects.get(user_id=request.user.id)
+    keys = Keys.objects.filter(device=device_lock).values()
+    return JsonResponse({'keys': list(keys)})
