@@ -6,47 +6,48 @@
 <h3>Here you can add your devices</h3>
 <hr />
 
-<div class="container dvcs">
-    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
-        {% for block in data %}
-        <div class="block-line">
-            <a href="{% url 'your_device' block.id %}" class="a-default open-popup">
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Device name</label>
-                    <div class="col-lg-4 lining">
-                        {{ block.device_name }}
+<div id="services" class="section">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
+            {% for block in data %}
+            <div class="service-item">
+                <a href="{% url 'your_device' block.id %}" class="a-default open-popup">
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Device name</label>
+                        <div class="col-lg-4 lining">
+                            {{ block.device_name }}
+                        </div>
                     </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Serial Num</label>
-                    <div class="col-lg-4 lining">
-                        {{ block.serial_num }}
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Serial Num</label>
+                        <div class="col-lg-4 lining">
+                            {{ block.serial_num }}
+                        </div>
                     </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Status</label>
-                    <div class="col-lg-4 lining">
-                        {{ block.status }}
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Status</label>
+                        <div class="col-lg-4 lining">
+                            {{ block.status }}
+                        </div>
                     </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Admin</label>
-                    <div class="col-lg-4 lining">
-                        {{ block.admin }}
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Admin</label>
+                        <div class="col-lg-4 lining">
+                            {{ block.admin }}
+                        </div>
                     </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Sync</label>
-                    <div class="col-lg-4 lining">
-                        {{ block.sync }}
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Sync</label>
+                        <div class="col-lg-4 lining">
+                            {{ block.sync }}
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
-
 
 
 {% if is_paginated %}
@@ -70,5 +71,18 @@
     </ul>
 </nav>
 {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+
+{% load static %}
+<script src="{% static 'app/js/animation.js' %}"></script>
+<script src="{% static 'app/js/custom.js' %}"></script>
+<script src="{% static 'app/js/imagesloaded.js' %}"></script>
+<script src="{% static 'app/js/isotope.js' %}"></script>
+<script src="{% static 'app/js/owl-carousel.js' %}"></script>
+<script src="{% static 'app/js/popup.js' %}"></script>
+<script src="{% static 'app/js/tabs.js' %}"></script>
 
 {% endblock %}

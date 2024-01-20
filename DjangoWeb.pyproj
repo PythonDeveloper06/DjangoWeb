@@ -4,7 +4,7 @@
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <Name>DjangoWeb</Name>
     <RootNamespace>DjangoWeb</RootNamespace>
-    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <InterpreterId>MSBuild|envweb|$(MSBuildProjectFullPath)</InterpreterId>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
     <SuppressPackageInstallationPrompt>True</SuppressPackageInstallationPrompt>
   </PropertyGroup>
@@ -77,6 +77,8 @@
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
+    <Folder Include="app\static\app\images\" />
+    <Folder Include="app\static\app\js\" />
     <Folder Include="app\static\app\scripts\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
@@ -84,7 +86,43 @@
     <Folder Include="media\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\static\app\content\Design.css" />
     <Content Include="app\static\app\content\style.css" />
+    <Content Include="app\static\app\images\about-bg.jpg" />
+    <Content Include="app\static\app\images\about-right-dec.png" />
+    <Content Include="app\static\app\images\client-bg.png" />
+    <Content Include="app\static\app\images\client-image.jpg" />
+    <Content Include="app\static\app\images\footer-bg.png" />
+    <Content Include="app\static\app\images\heading-line-dec.png" />
+    <Content Include="app\static\app\images\logo.png" />
+    <Content Include="app\static\app\images\pricing-table-01.png" />
+    <Content Include="app\static\app\images\pricing-table-02.png" />
+    <Content Include="app\static\app\images\pro-table-bottom.png" />
+    <Content Include="app\static\app\images\pro-table-top.png" />
+    <Content Include="app\static\app\images\quote.png" />
+    <Content Include="app\static\app\images\regular-table-bottom.png" />
+    <Content Include="app\static\app\images\regular-table-top.png" />
+    <Content Include="app\static\app\images\service-bg.jpg" />
+    <Content Include="app\static\app\images\service-icon-01.png" />
+    <Content Include="app\static\app\images\service-icon-02.png" />
+    <Content Include="app\static\app\images\service-icon-03.png" />
+    <Content Include="app\static\app\images\service-icon-04.png" />
+    <Content Include="app\static\app\images\service-icon-hover-01.png" />
+    <Content Include="app\static\app\images\service-icon-hover-02.png" />
+    <Content Include="app\static\app\images\service-icon-hover-03.png" />
+    <Content Include="app\static\app\images\service-icon-hover-04.png" />
+    <Content Include="app\static\app\images\services-left-dec.png" />
+    <Content Include="app\static\app\images\services-right-dec.png" />
+    <Content Include="app\static\app\images\slider-dec.png" />
+    <Content Include="app\static\app\images\slider-left-dec.png" />
+    <Content Include="app\static\app\images\white-logo.png" />
+    <Content Include="app\static\app\js\animation.js" />
+    <Content Include="app\static\app\js\custom.js" />
+    <Content Include="app\static\app\js\imagesloaded.js" />
+    <Content Include="app\static\app\js\isotope.js" />
+    <Content Include="app\static\app\js\owl-carousel.js" />
+    <Content Include="app\static\app\js\popup.js" />
+    <Content Include="app\static\app\js\tabs.js" />
     <Content Include="app\static\app\scripts\main.js" />
     <Content Include="app\templates\app\change_password.html" />
     <Content Include="app\templates\app\delete_key_form.html" />
