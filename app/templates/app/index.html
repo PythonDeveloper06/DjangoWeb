@@ -1,33 +1,58 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+{% load static %}
 
-<div class="jumbotron">
-    <h1>Django</h1>
-    <p class="lead">Django is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://www.djangoproject.com/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
+<header class="container-home">
+    <div class="content">
+        <div class="image">
+            <img src="{% static 'app/own_pictures/seld_pixian_ai.png'%}" alt="None" class="text_logo"> 
+        </div>
         <p>
-            Django gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            SELD - умный электронный замок контролируемый пользователем через приложение. 
+            Он сможет полностью настроить замок под свои нужды. 
+            Дистанционное открытие замка, создание постоянных и временных кодов доступа и NFC ключи, 
+            отслеживание состояние замка в реальном времени, 
+            ведение необходимой пользователю статистики и особые настройки безопасности 
+            (например изменение клавиатуры для большей защиты)
         </p>
-        <p><a class="btn btn-default" href="https://djangobook.com/django-tutorials/">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.org/">Learn more &raquo;</a></p>
+    <div class="image">
+        <img src="{% static 'app/own_pictures/Lock_SELD_square.jpg'%}" alt="None" class="round"> 
     </div>
-    <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
-    </div>
+</header>
+
+<div class="animated_text">
+    <p>SELD -&nbsp<p class="typed_text"></p></p>
 </div>
+
+<section>
+    <div class="container">
+        <h2 class="header">Мобильное приложение</h2>
+        <p>
+            Приложение будет обладать удобным, красивым и минималистичным дизайном. 
+            С помощью приложения пользователь сможет проводить настройку замка, 
+            выставлять коды доступа и генерировать NFC ключи. 
+            У пользователя может одновременно быть зарегистрировано несколько замков, 
+            и пользователь сможет проводить индивидуальную настройку каждого замка.
+        </p>
+        <div class="all_btn">
+            <button class="h-btn">Скачать apk-файл</button>  
+        </div>
+    </div>
+</section>
+
+<script>
+    var typed = new Typed(".typed_text", {
+        strings: [
+            "Smart Electronic Locking Device", 
+            "Умное электронное блокирующее устройство"
+        ],
+        typeSpeed: 45,
+        backSpeed: 50,
+        cursorChar: '',
+        loop: false,
+    });
+</script>
 
 {% endblock %}

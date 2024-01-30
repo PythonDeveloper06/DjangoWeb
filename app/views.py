@@ -129,8 +129,6 @@ class KeysListView(LoginRequiredMixin, ListView, FormMixin):
         slct = request.POST['selection']
         time_d = timepp(time_end, slct)
 
-        print(time_d)
-
         form = AddKeysModel({
             'key': request.POST['key'],
             'used': request.POST['used'],
@@ -188,5 +186,5 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
 # !---- Ajax data -----!
 def get_counter(request):
     device_lock = DeviceModel.objects.get(user_id=request.user.id)
-    keys = Keys.objects.filter(device=device_lock).values()
-    return JsonResponse({'keys': list(keys)})
+    keys = Keys.objects.filter(device=device_lock)
+    return JsonResponse({'keys': list(keys.values())})

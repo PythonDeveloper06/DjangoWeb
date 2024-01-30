@@ -1,44 +1,42 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'seld' %}"><span class="text-primary fs-5 ms-1 fw-bolder">SELD</span></a>
-        <button class="navbar-toggler btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Переключатель навигации">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'home' %}">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'about' %}">О нас</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'contact' %}">Контакты</a>
-                </li>
+<nav>
+    <a class="logo" href="{% url 'seld' %}"><span>SELD</span></a>
+    <ul class="navlist">
+        <li>
+            <a href="{% url 'home' %}">Главная</a>
+        </li>
+        <li>
+            <a href="{% url 'about' %}">О нас</a>
+        </li>
+        
+        {% if user.is_authenticated %}
 
-                {% if user.is_authenticated %}
+        <li>
+            <a  href="{% url 'devices' %}">Устройства</a>
+        </li>
+        <li>
+            <a href="{% url 'profile' %}">Аккаунт</a>
+        </li>
+        <li>
+            <a href="{% url 'log_out' %}">Выйти</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'devices' %}">Устройства</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'profile' %}">Аккаунт</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'log_out' %}">Выйти</a>
-                </li>
+        {% else %}
 
-                {% else %}
+        <li>
+            <a href="{% url 'signup' %}">Регистрация</a>
+        </li>
+        <li>
+            <a href="{% url 'log_in' %}">Вход</a>
+        </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'signup' %}">Регистрация</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white mx-2" href="{% url 'log_in' %}">Вход</a>
-                </li>
-
-                {% endif %}
-            </ul>
-        </div>
-    </div>
+        {% endif %}
+    </ul>
 </nav>
+
+<script>
+    const nav = document.querySelector("nav");
+
+    window.addEventListener("scroll", function() {
+        nav.classList.toggle("sticky", window.scrollY > 70);
+    });
+</script>
