@@ -3,7 +3,7 @@
 {% block safe %}
 
 <div class="container">
-        <h2>{{ title }}</h2>
+    <h2>{{ title }}</h2>
     <h3>Here you can add your new keys for devices</h3>
     <div class="form-group">
         <div>
@@ -54,8 +54,31 @@
     </div>
 
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3" id="keys-box">
-        </div>
+        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
+            {% for block in data %}
+            <div class="btn_device">
+                <a href="{% url 'delete_key_form' block.device_id block.id %}" class="a-default">
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Key</label>
+                        <div class="col-lg-6 text-center">
+                            {{ block.key }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Used</label>
+                        <div class="col-lg-6 text-center">
+                            {{ block.used }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-2 mb-1">
+                        <label class="col-lg-6 control-label text-center">Time</label>
+                        <div class="col-lg-6 text-center">
+                            {{ block.time }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
     </div>
 
     <script>

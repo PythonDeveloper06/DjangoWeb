@@ -121,6 +121,10 @@ class KeysListView(LoginRequiredMixin, ListView, FormMixin):
     extra_context = {'title': 'Your keys'}
 
 
+    def get_queryset(self):
+        return Keys.objects.filter(device_id=self.kwargs['pk'])
+
+
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         device_lock = DeviceModel.objects.get(id=self.kwargs['pk'])

@@ -1,9 +1,43 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+{% load static %}
 
-<div>
-    <h2 class="about">О нас</h2>   
-</div>
-
+<section>
+        <h2 class="about_page">О нас</h2>
+        <div class="about_text">
+            <div class="box">
+                <div class="for_img">
+                    <img src="{% static 'app/own_pictures/Danya.jpg' %}" class="rounded_image">
+                </div>
+                <p>Полуян Даниил Артемович, ученик 11 класса БОУ г. Омска «Гимназия №43». 
+                    Разработка софта для устройства и его прошивка 
+                </p>
+            </div>
+            <div class="box">
+                <div class="for_img">
+                    <img src="{% static 'app/own_pictures/Pasha.jpg' %}" class="rounded_image">
+                </div>
+                <p>Леднев Павел Денисович, ученик 11 класса БОУ г. Омска «Гимназия №84». 
+                    Создание и поддержка сервера, создание и поддержка приложения 
+                </p>
+            </div>
+            <div class="box">
+                <div class="for_img">
+                    <img src="{% static 'app/own_pictures/Sanya.jpg' %}" class="rounded_image">
+                </div>
+                <p>Рящиков Александр Григорьевич, ученик 11 класса БОУ г. Омска «СОШ №134». 
+                    3D моделирование, разработка макета устройства, экономический анализ, менеджмент
+                </p>
+            </div>
+            <div class="box">
+                <div class="for_img">
+                    <img src="{% static 'app/own_pictures/Misha.jpg' %}" class="rounded_image">
+                </div>
+                <p>Гордюшин Михаил Евгеньевич, ученик 11 класса БОУ г. Омска «Гимназия №43». 
+                    Создание и поддержка приложения, дизайн приложения
+                </p>
+            </div>
+        </div> 
+</section>
 {% endblock %}
