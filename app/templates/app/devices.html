@@ -8,11 +8,18 @@
 </div>
 <hr />
 
+<script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+  </script>
+
 <div class="container">
     <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
         {% for block in data %}
+        {% csrf_token %}
         <div class="btn_device">
-            <a href="{% url 'your_device' block.id %}" class="a-default">
+
                 <div class="row row-cols-2 mb-1">
                     <label class="col-lg-6 control-label text-center">Device name</label>
                     <div class="col-lg-4 text-center">
@@ -21,7 +28,7 @@
                 </div>
                 <div class="row row-cols-2 mb-1">
                     <label class="col-lg-6 control-label text-center">Status</label>
-                    <div class="col-lg-4 text-center">
+                    <div class="col-lg-4 text-center" hx-patch="{% url 'change_status' block.id %}" hx-trigger="click throttle:5000ms">
                         {{ block.status }}
                     </div>
                 </div>
@@ -37,11 +44,12 @@
                         {{ block.sync }}
                     </div>
                 </div>
-            </a>
+
         </div>
         {% endfor %}
     </div>
 </div>
+
 
 
 
@@ -69,6 +77,4 @@
 
 {% endblock %}
 
-{% block scripts %}
 
-{% endblock %}

@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'DjangoWeb.urls'
 
 LOGIN_URL = 'log_in'
+LOGIN_REDIRECT_URL = 'home'
 
 # Template configuration
 # https://docs.djangoproject.com/en/2.1/topics/templates/
@@ -123,6 +124,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 INTERNAL_IPS = ['127.0.0.1']

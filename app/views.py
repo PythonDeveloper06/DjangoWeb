@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -33,20 +33,6 @@ def home(request):
     )
 
 
-def contact(request):
-    """Renders the contact page."""
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'app/contact.html',
-        {
-            'title':'Contact',
-            'message':'Your contact page.',
-            'year': datetime.now().year,
-        }
-    )
-
-
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
@@ -59,12 +45,6 @@ def about(request):
             'year': datetime.now().year,
         }
     )
-
-
-def seld(request):
-    """Renders the SELD page."""
-    assert isinstance(request, HttpRequest)
-    return render(request, 'app/seld.html', {'title': 'SELD'})
 
 
 # !----- devices -----!
@@ -187,8 +167,14 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
     extra_context = {'year': datetime.now().year}
 
 
-# !---- Ajax data -----!
-def get_counter(request):
-    device_lock = DeviceModel.objects.get(user_id=request.user.id)
-    keys = Keys.objects.filter(device=device_lock)
-    return JsonResponse({'keys': list(keys.values())})
+# !----- htmx devices -----!
+def change_status(request, pk):
+    device = DeviceModel.objects.get(pk=pk)
+
+    if device.status == 'Close':
+        device.status = 'Open'
+    else:
+        device.status = 'Close'
+    device.save()
+
+    return HttpResponse(device.status)

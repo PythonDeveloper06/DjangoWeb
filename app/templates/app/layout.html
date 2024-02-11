@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/style.css' %}" />
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 
     <link rel="shortcut icon" type="image/png" href="{% static 'app/own_pictures/locked.png' %}" >
 </head>
@@ -33,38 +34,44 @@
     </div>
     <!-- ***** Preloader End ***** -->
 
+    <div class="wrapper">
+        {% include 'app/navbar.html' %}
+        
+        <div class="main">
+            {% block content %}
 
-    {% include 'app/navbar.html' %}
+            {% endblock %}
+
+            {% block safe %}
+
+            {% endblock %}
+        </div>
+        
     
-        {% block content %}
-
-        {% endblock %}
-
-        {% block safe %}
-
-        {% endblock %}
-
-    <footer>
-        <div class="column">
-            <p>Контакты</p>
-            <p>8 (960) 988-15-17</p>
-        </div>
-        <div class="column">
-            <p>Почта</p>
-            <p>seld-partnership@seld-lock.ru</p>
-        </div>
-        <div class="column">
-            <p>Социальные сети</p>
-            <div class="socials">
-                <a href="https://vk.com/seldlocker" target="_blank"><i class='bx bxl-vk'></i></a>
+        <footer class="footer">
+            <div class="grid_columns">
+                <div class="column">
+                    <p>Контакты</p>
+                    <p>8 (960) 988-15-17</p>
+                </div>
+                <div class="column">
+                    <p>Почта</p>
+                    <p>seld-partnership@seld-lock.ru</p>
+                </div>
+                <div class="column">
+                    <p>Социальные сети</p>
+                    <div class="socials">
+                        <a href="https://vk.com/seldlocker" target="_blank"><i class='bx bxl-vk'></i></a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </footer>
-    <div class="copyright">
-        <p>&#169; 2023 - 2024 SELD. All rigths reserved.</p>
+            <div class="copy_footer">
+                <div class="copyright">
+                    <p>&copy; 2023 - 2024 SELD. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
     </div>
-
-   
 
     {% block scripts %}
 

@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import *
@@ -37,15 +37,16 @@ class UpdateProfileForm(forms.ModelForm):
 
 # !----- Login Users -----!
 class BootstrapAuthenticationForm(AuthenticationForm):
-    """Authentication form which uses boostrap CSS."""
-    username = forms.CharField(max_length=254,
+    username = forms.CharField(label="Username",
+                               max_length=254,
                                widget=forms.TextInput({
                                    'class': 'form-control',
-                                   'placeholder': 'Username'}))
-    password = forms.CharField(label=_("Password"),
-                               widget=forms.PasswordInput({
+                                   'placeholder': 'Username'
+                                }))
+    password = forms.CharField(widget=forms.PasswordInput({
                                    'class': 'form-control',
-                                   'placeholder':'Password'}))
+                                   'placeholder':'Password'
+                                }))
 
 
 # !---- Registration View -----!
@@ -71,8 +72,6 @@ class AddDeviceModel(forms.ModelForm):
                 'placeholder': 'Status'
                 }),
             }
-
-
 
 
 # !----- Key form -----!

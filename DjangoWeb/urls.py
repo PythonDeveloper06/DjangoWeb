@@ -12,21 +12,21 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
 from app.forms import SignUpView
-from app.api import DeviceViewSet
+from app.api import DeviceViewSet, KeysViewSet
 from app.views import ChangePasswordView
-from rest_framework import routers
+
+from rest_framework_extensions.routers import ExtendedSimpleRouter
 
 
-router = routers.SimpleRouter()
-router.register(r'devices', DeviceViewSet, basename='DeviceViewSet')
+router = ExtendedSimpleRouter()
+router.register(r'devices', DeviceViewSet, basename='DeviceViewSet') \
+      .register(r'keys', KeysViewSet, basename='KeysViewSet', parents_query_lookups=['device'])
 
 
 urlpatterns = [
     path('', views.home, name='home'),
 
-    path('seld/', views.seld, name='seld'),
-
-    path('contact/', views.contact, name='contact'),
+    path('seld/', views.home, name='seld'),
 
     path('about/', views.about, name='about'),
 
@@ -93,8 +93,8 @@ urlpatterns = [
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 
 
-    # !----- Ajax data -----!
-    path('get_counter/', views.get_counter, name='get_ajax'),
+    # !----- HTMX data -----!
+    path('change_status/<int:pk>/', views.change_status, name='change_status'),
 ]
 
 if settings.DEBUG:

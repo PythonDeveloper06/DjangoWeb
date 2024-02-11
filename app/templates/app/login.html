@@ -5,43 +5,21 @@
 <h2>{{ title }}</h2>
 <h4>Use a local account to log in.</h4>
 <hr />
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            <form action="." method="post" class="form-horizontal">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="id_username" class="col-md-2 control-label">Username</label>
-                    <div class="col-md-10">
-                        {{ form.username }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="id_password" class="col-md-2 control-label">Password</label>
-                    <div class="col-md-10">
-                        {{ form.password }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="hidden" name="next" value="/" />
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                {% if form.errors %}
-                    <p class="validation-summary-errors">Please enter a correct user name and password.</p>
-                {% endif %}
-            </form>
-        </section>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-error">{{ form.non_field_errors }}</div>
+    {% for f in form %}
+        <div class="form-group">
+            <label for="{{ f.id_for_label }}" class="control-label">{{ f.label }}</label>
+            <div>
+                {{ f }}
+            </div>
+        </div>
+        <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    <div class="d-grid gap-2 col-lg-8 col-10 mx-auto mb-1">
+        <button type="submit" class="h-btn">Log in</button>
     </div>
-</div>
-
-{% endblock %}
-
-
-{% block scripts %}
-
-   {% load static %}
-<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+</form>
 
 {% endblock %}
