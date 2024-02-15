@@ -6,49 +6,53 @@
     <h3>Here you can add your new keys for devices</h3>
     <div class="form-group">
         <div>
-            <button type="submit" class="h-btn open-popup">Add new keys for devices</button>
+            <button type="button" class="h-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add new keys for devices</button>
             <a href="{% url 'devices' %}" class="h-btn a-default">Return to your devices</a>
         </div>
     </div>
     <hr />
 </div>
 
-<div class="popup-bg">
-    <div class="popup">
-        <form method="post" class="form-horizontal">
-            {% csrf_token %}
-            <h4 align="center">Add new keys</h4>
-            <hr />
-            <div class="row row-cols-1 row-cols-lg-2 mb-2">
-                <label class="col-lg-3 control-label text-center mb-1">Key</label>
-                <div class="col-lg-9">
-                    {{ form.key }}
-                </div>
+<div class="modal fade" id="exampleModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="color: black;">
+            <div class="modal-header">
+                <h5 class="modal-title text-center w-100" id="exampleModalLabel">Add new keys</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="row row-cols-1 row-cols-lg-2 mb-2">
-                <label class="col-lg-3 control-label text-center mb-1">Used</label>
-                <div class="col-lg-9">
-                    {{ form.used }}
-                </div>
+            <div class="modal-body">
+                <form method="post" class="form-horizontal">
+                    {% csrf_token %}
+                    <div class="row row-cols-1 row-cols-lg-2 mb-2">
+                        <label class="col-lg-3 control-label text-center mb-1">Key</label>
+                        <div class="col-lg-9">
+                            {{ form.key }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-lg-2 mb-2">
+                        <label class="col-lg-3 control-label text-center mb-1">Used</label>
+                        <div class="col-lg-9">
+                            {{ form.used }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-lg-2 mb-2">
+                        <label class="col-lg-3 control-label text-center mb-1">Time</label>
+                        <div class="col-lg-9">
+                            {{ form.time_end }}
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-lg-2 mb-2">
+                        <label class="col-lg-3 control-label text-center mb-1">Selection</label>
+                        <div class="col-lg-9">
+                            {{ form.selection }}
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 col-lg-8 col-10 mx-auto">
+                        <button type="submit" class="btn btn-outline-dark">Add</button>
+                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
-            <div class="row row-cols-1 row-cols-lg-2 mb-2">
-                <label class="col-lg-3 control-label text-center mb-1">Time</label>
-                <div class="col-lg-9">
-                    {{ form.time_end }}
-                </div>
-            </div>
-            <div class="row row-cols-1 row-cols-lg-2 mb-2">
-                <label class="col-lg-3 control-label text-center mb-1">Selection</label>
-                <div class="col-lg-9">
-                    {{ form.selection }}
-                </div>
-            </div>
-            <div class="d-grid gap-2 col-lg-8 col-10 mx-auto mb-1">
-                <button type="submit" class="btn btn-outline-dark">Add</button>
-            </div>
-        </form>
-        <div class="d-grid gap-2 col-lg-8 col-10 mx-auto">
-            <button type="submit" class="btn btn-outline-dark close-popup">Close</button>
         </div>
     </div>
 </div>
@@ -56,7 +60,7 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
         {% for block in data %}
-        <div class="btn_device">
+        <div class="btn_device_key btn_device">
             <a href="{% url 'delete_key_form' block.device_id block.id %}" class="a-default">
                 <div class="row row-cols-2 mb-1">
                     <label class="col-lg-6 control-label text-center">Key</label>
@@ -89,7 +93,7 @@
     $(document).ready(function () {
         $.ajax({
             type: "GET",
-            url: '{% url "get_ajax" %}',
+            url: '/',
             success: function (response) {
                 const data = response.keys
                 console.log(data)

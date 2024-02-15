@@ -65,7 +65,8 @@ class AddDeviceModel(forms.ModelForm):
         widgets = {
             'device_name': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Device name'
+                'placeholder': 'Device name',
+                'name': 'device_name'
                 }),
             'status': forms.TextInput(attrs={
                 'class': 'form-control',

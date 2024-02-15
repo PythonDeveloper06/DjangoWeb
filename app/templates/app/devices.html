@@ -12,45 +12,65 @@
     document.body.addEventListener('htmx:configRequest', (event) => {
       event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
     })
-  </script>
+</script>
 
 <div class="container">
     <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
         {% for block in data %}
-        {% csrf_token %}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const editor = document.querySelector('#device_name_{{block.id}}');
+                const post_content = document.querySelector('#format_text_{{block.id}}');
+        
+                // когда редактируется блок, его содержимое попадает в скрытое поле
+                editor.addEventListener('input', () => {
+                    post_content.value = editor.innerHTML.trim();
+                });
+            });
+        </script>
+
         <div class="btn_device">
+            <form class="row row-cols-2 mb-1">
 
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Device name</label>
-                    <div class="col-lg-4 text-center">
-                        {{ block.device_name }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Status</label>
-                    <div class="col-lg-4 text-center" hx-patch="{% url 'change_status' block.id %}" hx-trigger="click throttle:5000ms">
-                        {{ block.status }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Admin</label>
-                    <div class="col-lg-4 text-center">
-                        {{ block.admin }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Sync</label>
-                    <div class="col-lg-4 text-center">
-                        {{ block.sync }}
-                    </div>
+                <input name="device_name" id="format_text_{{block.id}}" type="hidden" value="">
+
+                <div class="col-lg-6 control-label text-center" hx-post="{% url 'change_device_name' block.id %}"
+                hx-target="#device_name_{{block.id}}">
+                    Device name
                 </div>
 
+                <div class="col-lg-4 text-center" contenteditable="true" id="device_name_{{block.id}}">
+                    {{ block.device_name }}
+                </div>
+                
+            </form>
+
+            <div class="row row-cols-2 mb-1">
+                <label class="col-lg-6 control-label text-center">Status</label>
+                <div class="col-lg-4 text-center" hx-patch="{% url 'change_status' block.id %}" hx-trigger="click throttle:5000ms">
+                    {{ block.status }}
+                </div>
+            </div>
+            <div class="row row-cols-2 mb-1">
+                <label class="col-lg-6 control-label text-center">Admin</label>
+                <div class="col-lg-4 text-center">
+                    {{ block.admin }}
+                </div>
+            </div>
+            <div class="row row-cols-2 mb-1">
+                <label class="col-lg-6 control-label text-center">Sync</label>
+                <div class="col-lg-4 text-center">
+                    {{ block.sync }}
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="{% url 'keys' block.id %}" class="a-btn h-btn a-default">Keys</a>
+            </div>
         </div>
         {% endfor %}
     </div>
 </div>
-
-
 
 
 {% if is_paginated %}

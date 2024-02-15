@@ -95,6 +95,7 @@ urlpatterns = [
 
     # !----- HTMX data -----!
     path('change_status/<int:pk>/', views.change_status, name='change_status'),
+    path('change_device_name/<int:pk>/', views.change_device_name, name='change_device_name'),
 ]
 
 if settings.DEBUG:

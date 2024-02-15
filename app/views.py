@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, QueryDict
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
+from django.views import View
 
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormMixin
@@ -49,11 +50,11 @@ def about(request):
 
 # !----- devices -----!
 # !!! start of all work !!!
-class DevicesListView(LoginRequiredMixin, ListView):
+class DevicesListView(LoginRequiredMixin, ListView, FormMixin):
+    form_class = AddDeviceModel
     model = DeviceModel
     template_name = 'app/devices.html'
     context_object_name = 'data'
-    from_class = AddDeviceModel
     paginate_by = 6
 
     def get_queryset(self):
@@ -168,6 +169,16 @@ class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChange
 
 
 # !----- htmx devices -----!
+def change_device_name(request, pk):
+    device = DeviceModel.objects.get(pk=pk)
+
+    device.device_name = request.POST.get('device_name') if request.POST.get('device_name') else device.device_name
+    print(device.device_name)
+    device.save()
+
+    return HttpResponse(device.device_name)
+
+
 def change_status(request, pk):
     device = DeviceModel.objects.get(pk=pk)
 
