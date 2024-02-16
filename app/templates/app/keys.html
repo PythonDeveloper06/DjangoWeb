@@ -13,6 +13,12 @@
     <hr />
 </div>
 
+<script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+</script>
+
 <div class="modal fade" id="exampleModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="color: black;">
@@ -60,27 +66,30 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
         {% for block in data %}
-        <div class="btn_device_key btn_device">
-            <a href="{% url 'delete_key_form' block.device_id block.id %}" class="a-default">
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Key</label>
-                    <div class="col-lg-6 text-center">
-                        {{ block.key }}
-                    </div>
+        <div class="btn_device" hx-target="this" style="text-align: center; justify-content: center; margin-top: auto; margin-bottom: auto;">
+            <div class="row row-cols-2 mb-1" hx-swap="outerHTML" >
+                <label class="col-lg-6 control-label text-center">Key</label>
+                <div class="col-lg-6 text-center">
+                    {{ block.key }}
                 </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Used</label>
-                    <div class="col-lg-6 text-center">
-                        {{ block.used }}
-                    </div>
+            </div>
+            <div class="row row-cols-2 mb-1">
+                <label class="col-lg-6 control-label text-center">Used</label>
+                <div class="col-lg-6 text-center">
+                    {{ block.used }}
                 </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Time end</label>
-                    <div class="col-lg-6 text-center">
-                        {{ block.time_end }}
-                    </div>
+            </div>
+            <div class="row row-cols-2 mb-1">
+                <label class="col-lg-6 control-label text-center">Time end</label>
+                <div class="col-lg-6 text-center">
+                    {{ block.time_end }}
                 </div>
-            </a>
+            </div>
+            <div style="text-align: center;">
+                <button type="button" class="a-btn h-btn a-default"
+                hx-delete="{% url 'delete_key' block.device_id block.id %}">
+                Delete</button>
+            </div>
         </div>
         {% endfor %}
     </div>

@@ -54,7 +54,7 @@
             </div>
             <div class="row row-cols-2 mb-1">
                 <label class="col-lg-6 control-label text-center">Admin</label>
-                <div class="col-lg-4 text-center">
+                <div class="col-lg-4 text-center" hx-patch="{% url 'change_admin' block.id %}" hx-trigger="click throttle:5000ms">
                     {{ block.admin }}
                 </div>
             </div>

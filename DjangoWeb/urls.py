@@ -92,10 +92,11 @@ urlpatterns = [
 
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 
-
     # !----- HTMX data -----!
     path('change_status/<int:pk>/', views.change_status, name='change_status'),
     path('change_device_name/<int:pk>/', views.change_device_name, name='change_device_name'),
+    path('change_admin/<int:pk>/', views.change_admin, name='change_admin'),
+    path('<int:pk>/delete_key/<int:id>/', views.delete_key, name='delete_key'),
 ]
 
 if settings.DEBUG:

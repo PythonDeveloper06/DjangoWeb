@@ -1,11 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, QueryDict
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
-from django.views import View
 
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormMixin
@@ -189,3 +187,21 @@ def change_status(request, pk):
     device.save()
 
     return HttpResponse(device.status)
+
+
+def change_admin(request, pk):
+    device = DeviceModel.objects.get(pk=pk)
+
+    if device.admin == 'Off':
+        device.admin = 'On'
+    else:
+        device.admin = 'Off'
+    device.save()
+
+    return HttpResponse(device.admin)
+
+
+def delete_key(request, id, pk):
+    Keys.objects.get(pk=id).delete()
+    keys = Keys.objects.filter(device_id=pk)
+    return HttpResponse('Устройство удалено')
