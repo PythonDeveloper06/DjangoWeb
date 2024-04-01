@@ -2,24 +2,48 @@
 
 {% block content %}
 
-<h2>{{ title }}</h2>
-<h4>Use a local account to log in.</h4>
-<hr />
-<form method="post">
-    {% csrf_token %}
-    <div class="form-error">{{ form.non_field_errors }}</div>
-    {% for f in form %}
-        <div class="form-group">
-            <label for="{{ f.id_for_label }}" class="control-label">{{ f.label }}</label>
-            <div>
-                {{ f }}
+<div class="mt-5">
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="btn_login" style="border-radius: 1rem;">
+            <div class="p-5 text-center">
+  
+              <div class="mb-md-5 mt-md-4">
+  
+                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                <p class="text-white-50 mb-5 text-center">Please enter your login and password!</p>
+  
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-error">{{ form.non_field_errors }}</div>
+                    {% for f in form %}
+                        <div class="form-group">
+                            <label for="{{ f.id_for_label }}" class="control-label text-center mb-2">{{ f.label }}</label>
+                            <div style="display: flex; align-items: center; justify-content: center;" class="mb-2">
+                                {{ f }}
+                            </div>
+                        </div>
+                        <div class="form-error">{{ f.errors }}</div>
+                    {% endfor %}
+                    <div class="d-grid gap-2 col-lg-8 col-10 mx-auto mb-2 mt-3">
+                        <button type="submit" class="h-btn">Login</button>
+                    </div>
+                </form>
+  
+              </div>
+  
+              <div>
+                <p class="mb-0">Don't have an account? <a href="{% url 'signup' %}" class="a-default-login text-white">Sign Up</a>
+                </p>
+              </div>
+  
             </div>
+          </div>
         </div>
-        <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-    <div class="d-grid gap-2 col-lg-8 col-10 mx-auto mb-1">
-        <button type="submit" class="h-btn">Log in</button>
+      </div>
     </div>
-</form>
+</div>
+
 
 {% endblock %}

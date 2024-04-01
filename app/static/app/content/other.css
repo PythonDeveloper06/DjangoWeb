@@ -1,0 +1,20 @@
+.btn_login {
+    padding: 11px 26px;
+    background: transparent;
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
+    border-radius: 8px;
+    transition: all .50s ease;
+    font-weight: 550;
+    margin: 5px 10px 5px 0;
+    width: 70vh;
+    cursor: pointer;
+}
+
+.a-default-login {
+    text-decoration: none;
+}
+
+.a-default-login:hover {
+    text-decoration: underline;
+}

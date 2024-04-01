@@ -48,10 +48,26 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'placeholder':'Password'
                                 }))
 
+class MyAuthForm(UserCreationForm):
+    username = forms.CharField(label="Username",
+                               max_length=254,
+                               widget=forms.TextInput({
+                                   'class': 'form-control',
+                                   'placeholder': 'Username'
+                                }))
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput({
+                                   'class': 'form-control',
+                                   'placeholder':'Password'
+                                }))
+    password2 = forms.CharField(label="Confirm password", widget=forms.PasswordInput({
+                                   'class': 'form-control',
+                                   'placeholder':'Password'
+                                }))
+
 
 # !---- Registration View -----!
 class SignUpView(CreateView):
-    form_class = UserCreationForm
+    form_class = MyAuthForm
     success_url = reverse_lazy('login')
     template_name = 'app/signup.html'
 
@@ -79,7 +95,7 @@ class AddDeviceModel(forms.ModelForm):
 class AddKeysModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['time_end'].initial = timezone.make_aware(datetime.datetime.now(), timezone=timezone.get_current_timezone())
+        self.fields['time_end'].initial = timezone.make_aware(datetime.datetime.now(), timezone=timezone.utc)
         self.fields['key'].initial = new_code()
 
 
