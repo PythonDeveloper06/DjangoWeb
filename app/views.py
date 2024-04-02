@@ -159,13 +159,6 @@ def profile(request):
     return render(request, 'app/profile.html', {'user_form': user_form, 'profile_form': profile_form, 'title': 'Profile', 'year': datetime.now().year})
 
 
-class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
-    template_name = 'app/change_password.html'
-    success_message = "Successfully Changed Your Password"
-    success_url = reverse_lazy('profile')
-    extra_context = {'year': datetime.now().year}
-
-
 # !----- htmx devices -----!
 def change_device_name(request, pk):
     device = DeviceModel.objects.get(pk=pk)

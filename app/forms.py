@@ -5,11 +5,14 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.utils.translation import gettext_lazy
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from .models import *
+
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 import datetime
 from .others import new_code
@@ -27,7 +30,7 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class UpdateProfileForm(forms.ModelForm):
-    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'text-white'}))
     bio = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
 
     class Meta:
@@ -65,11 +68,34 @@ class MyAuthForm(UserCreationForm):
                                 }))
 
 
-# !---- Registration View -----!
+# !----- Registration View -----!
 class SignUpView(CreateView):
     form_class = MyAuthForm
     success_url = reverse_lazy('login')
     template_name = 'app/signup.html'
+
+
+# !----- Profile View -----!
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(label="Old password", widget=forms.PasswordInput({
+                                   'class': 'form-control',
+                                   'placeholder': 'Enter old password'
+                                }))
+    new_password1 = forms.CharField(label="New password", widget=forms.PasswordInput({
+                                   'class': 'form-control',
+                                   'placeholder':'Enter new password'
+                                }))
+    new_password2 = forms.CharField(label="New password confirmation", widget=forms.PasswordInput({
+                                   'class': 'form-control',
+                                   'placeholder':'Confirm new password'
+                                }))
+
+
+class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'app/change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('profile')
 
 
 # !---- Device form -----!

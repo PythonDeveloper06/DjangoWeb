@@ -11,9 +11,8 @@ from django.urls import path, include, re_path
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
-from app.forms import SignUpView
+from app.forms import SignUpView, ChangePasswordView
 from app.api import DeviceViewSet, KeysViewSet
-from app.views import ChangePasswordView
 
 from rest_framework_extensions.routers import ExtendedSimpleRouter
 
