@@ -198,3 +198,14 @@ def delete_key(request, id, pk):
     Keys.objects.get(pk=id).delete()
     keys = Keys.objects.filter(device_id=pk)
     return HttpResponse('Устройство удалено')
+
+
+# !----- download file apk -----!
+def download_file(request):
+    fl_path = 'app/static/app/mobile_app/app-debug.apk'
+    filename = 'seld.apk'
+
+    fl = open(fl_path, 'rb')
+    response = HttpResponse(fl, content_type='application/force-download')
+    response['Content-Disposition'] = f"attachment; filename={filename}"
+    return response

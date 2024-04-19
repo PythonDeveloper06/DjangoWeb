@@ -87,6 +87,8 @@ urlpatterns = [
          name='delete_key_form'
     ),
 
+    path('download_apk_file/', views.download_file, name="download_apk_file"),
+
     path('api/v1.0/auth/', include('djoser.urls')),
 
     re_path(r'^auth/', include('djoser.urls.authtoken')),

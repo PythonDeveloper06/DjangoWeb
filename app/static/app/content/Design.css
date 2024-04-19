@@ -193,15 +193,12 @@ home page
 .container-home {
     max-width: 1200px;
     margin: auto;
-    padding: 4rem 2rem 2rem 2rem;
+    padding: 3rem 2rem 2rem 2rem;
 }
 
 header {
     position: relative;
     padding-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
 }
 
 .round {
@@ -223,6 +220,7 @@ header .image {
     align-items: center;
     display: flex;
     position: relative;
+    padding-top: 1rem;
 }
 
 header .image img {
