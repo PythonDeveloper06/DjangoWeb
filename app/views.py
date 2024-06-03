@@ -7,8 +7,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormMixin
-from django.contrib.auth.views import PasswordChangeView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.utils import timezone
 
 from .forms import AddDeviceModel, UpdateProfileForm, UpdateUserForm, AddKeysModel
@@ -16,6 +14,7 @@ from .models import DeviceModel, Keys
 from .others import timepp
 
 from datetime import datetime
+from rest_framework import status
 
 
 # !----- basic views -----!
@@ -209,3 +208,16 @@ def download_file(request):
     response = HttpResponse(fl, content_type='application/force-download')
     response['Content-Disposition'] = f"attachment; filename={filename}"
     return response
+
+
+# !----- own errors -----!
+def handler_403(request, exception=None):  
+    return render(request, "errors_app/403.html", {'title': '403 - в доступе отказано!'}, status=status.HTTP_403_FORBIDDEN)  
+
+
+def handler_404(request, exception=None):  
+    return render(request, "errors_app/404.html", {'title': '404 - страница не найдена!'}, status=status.HTTP_403_FORBIDDEN)  
+
+
+def handler_500(request, exception=None):  
+    return render(request, "errors_app/500.html", {'title': '500 - ошибка сервера!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

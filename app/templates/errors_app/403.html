@@ -1,0 +1,11 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <div class="text-center">
+            <h1 class="fw-bold">403</h1>
+            <p class="fs-3">В доступе отказано</p>
+            <a href="{% url 'home' %}" class="btn btn-primary my-btn">Вернуться на главную</a>
+        </div>
+    </div>
+{% endblock %}
