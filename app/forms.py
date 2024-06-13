@@ -51,6 +51,8 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'placeholder':'Password'
                                 }))
 
+
+# !----- Registration View -----!
 class MyAuthForm(UserCreationForm):
     username = forms.CharField(label="Username",
                                max_length=254,
@@ -68,7 +70,6 @@ class MyAuthForm(UserCreationForm):
                                 }))
 
 
-# !----- Registration View -----!
 class SignUpView(CreateView):
     form_class = MyAuthForm
     success_url = reverse_lazy('login')

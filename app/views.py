@@ -18,7 +18,7 @@ from rest_framework import status
 
 
 # !----- basic views -----!
-def home(request):
+def home(request) -> HttpResponse:
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
     return render(
@@ -31,7 +31,7 @@ def home(request):
     )
 
 
-def about(request):
+def about(request) -> HttpResponse:
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
     return render(
@@ -196,7 +196,7 @@ def change_admin(request, pk):
 def delete_key(request, id, pk):
     Keys.objects.get(pk=id).delete()
     keys = Keys.objects.filter(device_id=pk)
-    return HttpResponse('Устройство удалено')
+    return HttpResponse('Ключ удалён')
 
 
 # !----- download file apk -----!
@@ -216,7 +216,7 @@ def handler_403(request, exception=None):
 
 
 def handler_404(request, exception=None):  
-    return render(request, "errors_app/404.html", {'title': '404 - страница не найдена!'}, status=status.HTTP_403_FORBIDDEN)  
+    return render(request, "errors_app/404.html", {'title': '404 - страница не найдена!'}, status=status.HTTP_404_NOT_FOUND)  
 
 
 def handler_500(request, exception=None):  

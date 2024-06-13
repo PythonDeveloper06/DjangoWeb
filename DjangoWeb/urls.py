@@ -22,9 +22,9 @@ router.register(r'devices', DeviceViewSet, basename='DeviceViewSet') \
       .register(r'keys', KeysViewSet, basename='KeysViewSet', parents_query_lookups=['device'])
 
 
-handler403 = views.handler_403
-handler404 = views.handler_404
-handler500 = views.handler_500
+handler403 = 'app.views.handler_403'
+handler404 = 'app.views.handler_404'
+handler500 = 'app.views.handler_500'
 
 
 urlpatterns = [
