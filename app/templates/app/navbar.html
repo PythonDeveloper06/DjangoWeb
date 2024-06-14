@@ -28,6 +28,53 @@
         <li>
             <a href="{% url 'log_in' %}">Вход</a>
         </li>
+        
+        {% endif %}
+
+        <li onclick="showSidebar()" class="showHam">
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#e8eaed">
+                    <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+                </svg>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="sidebar">
+        <li onclick="closeSidebar()">
+            <a>
+                <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#e8eaed">
+                    <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+                </svg>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'home' %}">Главная</a>
+        </li>
+        <li>
+            <a href="{% url 'about' %}">О нас</a>
+        </li>
+        
+        {% if user.is_authenticated %}
+
+        <li>
+            <a  href="{% url 'devices' %}">Устройства</a>
+        </li>
+        <li>
+            <a href="{% url 'profile' %}">Аккаунт</a>
+        </li>
+        <li>
+            <a href="{% url 'log_out' %}">Выйти</a>
+        </li>
+
+        {% else %}
+
+        <li>
+            <a href="{% url 'signup' %}">Регистрация</a>
+        </li>
+        <li>
+            <a href="{% url 'log_in' %}">Вход</a>
+        </li>
 
         {% endif %}
     </ul>
@@ -39,4 +86,15 @@
     window.addEventListener("scroll", function() {
         nav.classList.toggle("sticky", window.scrollY > 70);
     });
+
+    function showSidebar() {
+        const sidebar = document.querySelector(".sidebar");
+        sidebar.style.right = '0';
+    }
+
+    function closeSidebar() {
+        const sidebar = document.querySelector(".sidebar");
+        sidebar.style.right = '-100%';
+    }
+
 </script>

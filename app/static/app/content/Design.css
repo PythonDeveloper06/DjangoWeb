@@ -118,6 +118,7 @@ navbar
     --main-color: #13bbff;
     --bg-color: #1b1f24;
     --second-bg-color: #22282f;
+    --navside: #191d21;
     --big-font: 4.5rem;
     --h4-font: 1.6rem;
     --p-font: 1.1rem;
@@ -169,6 +170,7 @@ span {
     display: flex;
     margin-bottom: 0;
     gap: 2.5rem;
+    align-items: center;
 }
 
 .navlist a {
@@ -182,6 +184,46 @@ span {
 .navlist a:hover {
     color: var(--main-color);
     text-shadow: 3px 3px 20px var(--main-color), -2px 1px 30px var(--text-color);
+}
+
+a:hover svg path {
+    fill: var(--main-color);
+    transition: all .50s ease;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 250px;
+    z-index: 1000;
+    background-color: var(--navside);
+    box-shadow: -10px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    padding: 20px 2rem;
+    transition: 0.75s ease-out;
+}
+
+.sidebar a {
+    font-size: var(--p-font);
+    font-weight: 500;
+    color: var(--text-color);
+    transition: all .50s ease;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    color: var(--main-color);
+    text-shadow: 3px 3px 20px var(--main-color), -2px 1px 30px var(--text-color);
+}
+
+.showHam {
+    display: none;
 }
 
 /*
@@ -203,8 +245,6 @@ header {
 
 .round {
     border-radius: 50%;
-    width: 500px;
-    height: 500px;
     object-fit: cover;
     border: 7px solid var(--main-color);
     box-shadow: 0 0 20px var(--main-color);
