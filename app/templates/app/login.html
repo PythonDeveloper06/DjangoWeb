@@ -3,16 +3,16 @@
 {% block content %}
 
 <div class="mt-5">
-    <div class="container">
+    <div class="">
       <div class="d-flex justify-content-center align-items-center">
         <div class="">
           <div class="btn_login" style="border-radius: 1rem;">
-            <div class="p-5 text-center">
+            <div class="p-3 text-center">
   
-              <div class="mb-md-5 mt-md-4">
+              <div class="mb-4 mt-4">
   
                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                <p class="text-white-50 mb-5 text-center">Please enter your login and password!</p>
+                <p class="text-white-50 mb-4 text-center">Please enter your login and password!</p>
   
                 <form method="post">
                     {% csrf_token %}
@@ -26,7 +26,7 @@
                         </div>
                         <div class="form-error">{{ f.errors }}</div>
                     {% endfor %}
-                    <div class="d-grid gap-2 col-lg-8 col-10 mx-auto mb-2 mt-3">
+                    <div class="d-grid gap-2 col-lg-8 col-8 mx-auto mb-2 mt-3">
                         <button type="submit" class="h-btn">Login</button>
                     </div>
                 </form>

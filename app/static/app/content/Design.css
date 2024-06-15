@@ -206,7 +206,8 @@ a:hover svg path {
     justify-content: flex-start;
     gap: 1.5rem;
     padding: 20px 2rem;
-    transition: 0.75s ease-out;
+    transition: 0.7s ease-out;
+    border-radius: 20px;
 }
 
 .sidebar a {
@@ -302,8 +303,9 @@ section .header {
 }
 
 section p {
-    text-align: justify;
+    text-align: center;
     font-size: 16px;
+    margin-bottom: 0px;
 }
 
 .all_btn {
@@ -351,7 +353,7 @@ h2.about_page {
 }
 
 .box {
-    padding: 80px 30px 66px;
+    padding: 70px 30px 40px;
     background: #2d343f;
     border-radius: 28px;
     border: 1px solid transparent;
