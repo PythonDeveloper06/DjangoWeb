@@ -196,7 +196,7 @@ def change_admin(request, pk):
 def delete_key(request, id, pk):
     Keys.objects.get(pk=id).delete()
     keys = Keys.objects.filter(device_id=pk)
-    return HttpResponse('Ключ удалён')
+    return HttpResponse('<p class="mb-0">Ключ удалён</p>')
 
 
 # !----- download file apk -----!

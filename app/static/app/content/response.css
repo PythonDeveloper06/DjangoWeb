@@ -124,32 +124,6 @@
     }
 }
 
-/* reg_log */
-
-@media(max-width: 2400px) {
-    .btn_login {
-        width: 70vh;
-    }
-}
-
-@media(max-width: 550px) {
-    .btn_login {
-        width: 60vh;
-    }
-}
-
-@media(max-width: 480px) {
-    .btn_login {
-        width: 55vh;
-    }
-}
-
-@media(max-width: 430px) {
-    .btn_login {
-        width: 50vh;
-    }
-}
-
 /* footer */
 
 @media(max-width: 785px) {
@@ -157,3 +131,16 @@
         grid-template-columns: none;
     }
 }
+
+/* fix bootstrap 5*/
+.row {
+    --bs-gutter-x: 0;
+    margin: 0;
+}
+
+@media(min-width: 992px) {
+    .btn_device {
+        margin: 5px 10px 5px 0;
+    }
+}
+

@@ -3,11 +3,12 @@
 {% block content %}
 
 <div class="container" style="margin-top: 2rem;">
-    <h2>{{ title }}</h2>
-    <h3>Here you can add your devices</h3>
-    <hr/>
-</div>
+    <div class="text-center">
+        <h2>{{ title }}</h2>
+        <h3>Here you can add your devices</h3>
+    </div>
 
+<hr/>
 
 <script>
     document.body.addEventListener('htmx:configRequest', (event) => {
@@ -15,8 +16,7 @@
     })
 </script>
 
-<div class="container">
-    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3">
+    <div class="d-flex row row-cols-1 row-cols-md-1 row-cols-lg-3 justify-content-center">
         {% for block in data %}
 
         <script>
