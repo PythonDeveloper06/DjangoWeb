@@ -117,6 +117,8 @@ navbar
     --text-color: #ffffff;
     --main-color: #13bbff;
     --bg-color: #1b1f24;
+    --bg-color-image: linear-gradient(#0e0228 38%, #022384);
+    --bl-colors-blue-dark-bg: #140648;
     --second-bg-color: #22282f;
     --navside: #191d21;
     --big-font: 4.5rem;
@@ -130,7 +132,8 @@ html {
 
 body {
     color: var(--text-color);
-    background: var(--bg-color);
+    background: var(--bg-color-image);
+    background-attachment: fixed;
     height: 100%;
 }
 
@@ -455,7 +458,6 @@ devices
     transition: all .50s ease;
     font-weight: 550;
     margin: 5px 0px 5px 0px;
-    width: 55vh;
     cursor: pointer;
 }
 

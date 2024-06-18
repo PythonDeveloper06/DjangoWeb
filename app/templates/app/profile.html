@@ -19,8 +19,8 @@
         {% endif %}
     {% endfor %}
 
-    <div class="row">
-        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+    <div class="row" style="--bs-gutter-x: 1.5rem;">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 profile">
             <div class="card h-100">
                 <div class="card-body">
                     <div class="account-settings">
@@ -38,25 +38,32 @@
                 </div>
             </div>
         </div>
+
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
             <div class="card h-100">
                 <div class="card-body">
                     <form method="post" class="form-horizontal">
                         {% csrf_token %}
                         <div class="row">
+                            
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <h6 class="mb-3 text-primary">Personal Details</h6>
                             </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+
                             <div class="form-group">
                                 <label class="text-white">Username</label>
                                 <div>{{ user_form.username }}</div>
                             </div>
-                            <div class="form-group">
-                                <a class="a-default-login text-white" href="{% url 'change_password' %}">Change password</a>
+
+                            <div class="form-group a-change">
+                                <a class="text-white a-default-login" href="{% url 'change_password' %}">Change password</a>
                             </div>
+
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                             <div class="form-group">
                                 <label class="text-white">Avatar</label>
                                 <div>{{ profile_form.avatar }}</div>

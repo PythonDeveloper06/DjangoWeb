@@ -31,6 +31,8 @@
             });
         </script>
 
+        <div class="col-10 col-md-6 col-lg-5 col-xl-4">
+
         <div class="btn_device">
             <form class="row row-cols-2 mb-1">
 
@@ -41,7 +43,7 @@
                     Device name
                 </div>
 
-                <div class="col-lg-4 text-center" contenteditable="true" id="device_name_{{block.id}}">
+                <div class="col-lg-6 text-center" contenteditable="true" id="device_name_{{block.id}}">
                     {{ block.device_name }}
                 </div>
                 
@@ -49,19 +51,19 @@
 
             <div class="row row-cols-2 mb-1">
                 <label class="col-lg-6 control-label text-center">Status</label>
-                <div class="col-lg-4 text-center" hx-patch="{% url 'change_status' block.id %}" hx-trigger="click throttle:5000ms">
+                <div class="col-lg-6 text-center" hx-patch="{% url 'change_status' block.id %}" hx-trigger="click throttle:5000ms">
                     {{ block.status }}
                 </div>
             </div>
             <div class="row row-cols-2 mb-1">
                 <label class="col-lg-6 control-label text-center">Admin</label>
-                <div class="col-lg-4 text-center" hx-patch="{% url 'change_admin' block.id %}" hx-trigger="click throttle:5000ms">
+                <div class="col-lg-6 text-center" hx-patch="{% url 'change_admin' block.id %}" hx-trigger="click throttle:5000ms">
                     {{ block.admin }}
                 </div>
             </div>
             <div class="row row-cols-2 mb-1">
                 <label class="col-lg-6 control-label text-center">Sync</label>
-                <div class="col-lg-4 text-center">
+                <div class="col-lg-6 text-center">
                     {{ block.sync }}
                 </div>
             </div>
@@ -70,6 +72,8 @@
             </div>
         </div>
         {% endfor %}
+    </div>
+
     </div>
 </div>
 

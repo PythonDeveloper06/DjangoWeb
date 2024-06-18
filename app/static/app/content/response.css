@@ -144,3 +144,16 @@
     }
 }
 
+
+@media(max-width: 995px) {
+    .profile {
+        margin-bottom: 1rem;
+    }
+}
+
+@media(max-width: 768px) {
+    .a-change {
+        margin-bottom: 1rem;
+    }
+}
+
