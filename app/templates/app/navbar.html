@@ -32,7 +32,7 @@
         {% endif %}
 
         <li onclick="showSidebar()" class="showHam">
-            <a href="#">
+            <a>
                 <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#e8eaed">
                     <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
                 </svg>
@@ -86,11 +86,11 @@
     window.addEventListener("scroll", function() {
         nav.classList.toggle("sticky", window.scrollY > 70);
     });
-
-    function showSidebar() {
-        const sidebar = document.querySelector(".sidebar");
-        sidebar.style.right = '0';
-    }
+    
+    $('.showHam').click(function(e) {
+        e.preventDefault();
+        $('.sidebar').css('right', '0');
+    })
 
     function closeSidebar() {
         const sidebar = document.querySelector(".sidebar");

@@ -126,7 +126,7 @@
 
 /* footer */
 
-@media(max-width: 785px) {
+@media (max-width: 785px) {
     .grid_columns {
         grid-template-columns: none;
     }
@@ -138,7 +138,7 @@
     margin: 0;
 }
 
-@media(min-width: 992px) {
+@media(min-width: 765px) {
     .btn_device {
         margin: 5px 10px 5px 0;
     }
@@ -154,6 +154,21 @@
 @media(max-width: 768px) {
     .a-change {
         margin-bottom: 1rem;
+    }
+
+    .media-profile {
+        text-align: center;
+    }
+
+    .input-profile {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media(min-width: 1200px) {
+    div.col-xl-4 {
+        width: 32%;
     }
 }
 

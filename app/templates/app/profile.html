@@ -44,35 +44,36 @@
                 <div class="card-body">
                     <form method="post" class="form-horizontal">
                         {% csrf_token %}
-                        <div class="row">
+                        <div class="row media-profile">
                             
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <h6 class="mb-3 text-primary">Personal Details</h6>
+                                <h6 class="mb-3 text-white">Personal Details</h6>
                             </div>
 
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
 
-                            <div class="form-group">
-                                <label class="text-white">Username</label>
-                                <div>{{ user_form.username }}</div>
+                                <div class="form-group">
+                                    <label class="text-white">Username</label>
+                                    <div class="input-profile">{{ user_form.username }}</div>
+                                </div>
+
+                                <div class="form-group a-change">
+                                    <a class="text-white a-default-login" href="{% url 'change_password' %}">Change password</a>
+                                </div>
+
                             </div>
 
-                            <div class="form-group a-change">
-                                <a class="text-white a-default-login" href="{% url 'change_password' %}">Change password</a>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label class="text-white">Avatar</label>
+                                    <div class="input-profile">{{ profile_form.avatar }}</div>
+                                </div>
                             </div>
-
                         </div>
 
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="form-group">
-                                <label class="text-white">Avatar</label>
-                                <div>{{ profile_form.avatar }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
+                    <div class="row media-profile input-profile">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                            <h6 class="mb-3 text-primary mt-3">About</h6>
+                            <h6 class="mb-3 text-white mt-3">About</h6>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
