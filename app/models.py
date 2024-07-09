@@ -45,11 +45,11 @@ class Profile(models.Model):
             img.thumbnail(new_img)
             img.save(self.avatar.path)
 
-            
+
 class Keys(models.Model):
     USED_CHOICES = [
-        ('C', 'Constant'), 
-        ('T', 'Temporary'), 
+        ('C', 'Constant'),
+        ('T', 'Temporary'),
         ('O', 'One use')
     ]
 
@@ -58,7 +58,7 @@ class Keys(models.Model):
         ('+1h', '1 hour'),
         ('+1d', '1 day'),
         ('+1w', '1 week'),
-        ('+2w', '2 week'), 
+        ('+2w', '2 week'),
     ]
 
     key = models.IntegerField()

@@ -25,7 +25,7 @@ def home(request) -> HttpResponse:
         request,
         'app/index.html',
         {
-            'title':'Home Page',
+            'title': 'Home Page',
             'year': datetime.now().year,
         }
     )
@@ -38,8 +38,8 @@ def about(request) -> HttpResponse:
         request,
         'app/about.html',
         {
-            'title':'About',
-            'message':'Your application description page.',
+            'title': 'About',
+            'message': 'Your application description page.',
             'year': datetime.now().year,
         }
     )
@@ -80,7 +80,7 @@ class DeviceUpdateView(LoginRequiredMixin, UpdateView):
         request.POST['user'] = self.request.user
 
         return super(DeviceUpdateView, self).post(request, **kwargs)
-    
+
 
 class DeviceDeleteView(LoginRequiredMixin, DeleteView):
     model = DeviceModel
@@ -98,10 +98,8 @@ class KeysListView(LoginRequiredMixin, ListView, FormMixin):
     form_class = AddKeysModel
     extra_context = {'title': 'Your keys'}
 
-
     def get_queryset(self):
         return Keys.objects.filter(device_id=self.kwargs['pk'])
-
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
@@ -118,7 +116,7 @@ class KeysListView(LoginRequiredMixin, ListView, FormMixin):
             'time_end': time_d,
             'selection': request.POST['selection'],
             'device': device_lock
-            })
+        })
 
         if form.is_valid():
             if not Keys.objects.filter(key=request.POST['key']):
@@ -155,7 +153,9 @@ def profile(request):
         user_form = UpdateUserForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.profile)
 
-    return render(request, 'app/profile.html', {'user_form': user_form, 'profile_form': profile_form, 'title': 'Profile', 'year': datetime.now().year})
+    return render(request, 'app/profile.html',
+                  {'user_form': user_form, 'profile_form': profile_form, 'title': 'Profile',
+                   'year': datetime.now().year})
 
 
 # !----- htmx devices -----!
@@ -211,13 +211,16 @@ def download_file(request):
 
 
 # !----- own errors -----!
-def handler_403(request, exception=None):  
-    return render(request, "errors_app/403.html", {'title': '403 - в доступе отказано!'}, status=status.HTTP_403_FORBIDDEN)  
+def handler_403(request, exception=None):
+    return render(request, "errors_app/403.html", {'title': '403 - в доступе отказано!'},
+                  status=status.HTTP_403_FORBIDDEN)
 
 
-def handler_404(request, exception=None):  
-    return render(request, "errors_app/404.html", {'title': '404 - страница не найдена!'}, status=status.HTTP_404_NOT_FOUND)  
+def handler_404(request, exception=None):
+    return render(request, "errors_app/404.html", {'title': '404 - страница не найдена!'},
+                  status=status.HTTP_404_NOT_FOUND)
 
 
-def handler_500(request, exception=None):  
-    return render(request, "errors_app/500.html", {'title': '500 - ошибка сервера!'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+def handler_500(request, exception=None):
+    return render(request, "errors_app/500.html", {'title': '500 - ошибка сервера!'},
+                  status=status.HTTP_500_INTERNAL_SERVER_ERROR)

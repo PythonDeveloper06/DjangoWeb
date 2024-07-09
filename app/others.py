@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 import random
 
-
 NUMBERS = ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')
 
 
@@ -16,7 +15,7 @@ def timepp(time, select):
     time = datetime.strptime(time, '%d.%m.%Y %H:%M:%S')
     match select:
         case '+1h':
-             time += timedelta(hours=1)
+            time += timedelta(hours=1)
         case '+1d':
             time += timedelta(days=1)
         case '+1w':
@@ -24,4 +23,3 @@ def timepp(time, select):
         case '+2w':
             time += timedelta(days=14)
     return time
-    

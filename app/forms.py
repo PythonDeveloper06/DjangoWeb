@@ -45,11 +45,11 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                widget=forms.TextInput({
                                    'class': 'form-control',
                                    'placeholder': 'Username'
-                                }))
+                               }))
     password = forms.CharField(widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Password'
-                                }))
+        'class': 'form-control',
+        'placeholder': 'Password'
+    }))
 
 
 # !----- Registration View -----!
@@ -59,15 +59,15 @@ class MyAuthForm(UserCreationForm):
                                widget=forms.TextInput({
                                    'class': 'form-control',
                                    'placeholder': 'Username'
-                                }))
+                               }))
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Password'
-                                }))
+        'class': 'form-control',
+        'placeholder': 'Password'
+    }))
     password2 = forms.CharField(label="Confirm password", widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Password'
-                                }))
+        'class': 'form-control',
+        'placeholder': 'Password'
+    }))
 
 
 class SignUpView(CreateView):
@@ -79,17 +79,17 @@ class SignUpView(CreateView):
 # !----- Profile View -----!
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(label="Old password", widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder': 'Enter old password'
-                                }))
+        'class': 'form-control',
+        'placeholder': 'Enter old password'
+    }))
     new_password1 = forms.CharField(label="New password", widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Enter new password'
-                                }))
+        'class': 'form-control',
+        'placeholder': 'Enter new password'
+    }))
     new_password2 = forms.CharField(label="New password confirmation", widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Confirm new password'
-                                }))
+        'class': 'form-control',
+        'placeholder': 'Confirm new password'
+    }))
 
 
 class ChangePasswordView(LoginRequiredMixin, SuccessMessageMixin, PasswordChangeView):
@@ -110,12 +110,12 @@ class AddDeviceModel(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Device name',
                 'name': 'device_name'
-                }),
+            }),
             'status': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Status'
-                }),
-            }
+            }),
+        }
 
 
 # !----- Key form -----!
@@ -125,9 +125,10 @@ class AddKeysModel(forms.ModelForm):
         self.fields['time_end'].initial = timezone.make_aware(datetime.datetime.now(), timezone=timezone.utc)
         self.fields['key'].initial = new_code()
 
-
-    key = forms.CharField(min_length=4, max_length=16, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Key'}))
-    time_end = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Time'}))
+    key = forms.CharField(min_length=4, max_length=16,
+                          widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Key'}))
+    time_end = forms.DateTimeField(required=False,
+                                   widget=forms.DateTimeInput(attrs={'class': 'form-control', 'placeholder': 'Time'}))
 
     class Meta:
         model = Keys
@@ -135,14 +136,11 @@ class AddKeysModel(forms.ModelForm):
 
         widgets = {
             'used': forms.Select(attrs={
-                'class': 'form-control', 
+                'class': 'form-control',
                 'placeholder': 'Used'
-                }),
+            }),
             'selection': forms.Select(attrs={
-                'class': 'form-control', 
+                'class': 'form-control',
                 'placeholder': 'Quick selection'
-                })
-            }
-
-
-
+            })
+        }

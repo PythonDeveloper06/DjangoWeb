@@ -7,87 +7,91 @@
         <h2>{{ title }}</h2>
         <h3>Here you can add your new keys for devices</h3>
         <div class="d-grid gap-2 mx-auto col-9 col-sm-6 d-lg-block d-md-grid">
-            <button type="button" class="h-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add new keys for devices</button>
+            <button type="button" class="h-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add new keys for
+                devices
+            </button>
             <a href="{% url 'devices' %}" class="h-btn a-default">Return to your devices</a>
         </div>
     </div>
-      
-<hr />
 
-<div class="modal fade" id="exampleModal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="color: black;">
-            <div class="modal-header">
-                <h5 class="modal-title text-center w-100" id="exampleModalLabel">Add new keys</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" class="form-horizontal">
-                    {% csrf_token %}
-                    <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
-                        <label class="col-lg-3 control-label text-center mb-1">Key</label>
-                        <div class="col-lg-9 justify-content-center d-flex">
-                            {{ form.key }}
+    <hr/>
+
+    <div class="modal fade" id="exampleModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="color: black;">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center w-100" id="exampleModalLabel">Add new keys</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
+                            <label class="col-lg-3 control-label text-center mb-1">Key</label>
+                            <div class="col-lg-9 justify-content-center d-flex">
+                                {{ form.key }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
-                        <label class="col-lg-3 control-label text-center mb-1">Used</label>
-                        <div class="col-lg-9 justify-content-center d-flex">
-                            {{ form.used }}
+                        <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
+                            <label class="col-lg-3 control-label text-center mb-1">Used</label>
+                            <div class="col-lg-9 justify-content-center d-flex">
+                                {{ form.used }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
-                        <label class="col-lg-3 control-label text-center mb-1">Time</label>
-                        <div class="col-lg-9 justify-content-center d-flex">
-                            {{ form.time_end }}
+                        <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
+                            <label class="col-lg-3 control-label text-center mb-1">Time</label>
+                            <div class="col-lg-9 justify-content-center d-flex">
+                                {{ form.time_end }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
-                        <label class="col-lg-3 control-label text-center mb-1">Selection</label>
-                        <div class="col-lg-9 justify-content-center d-flex">
-                            {{ form.selection }}
+                        <div class="row row-cols-1 row-cols-lg-2 mb-2 align-items-center">
+                            <label class="col-lg-3 control-label text-center mb-1">Selection</label>
+                            <div class="col-lg-9 justify-content-center d-flex">
+                                {{ form.selection }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-grid gap-2 col-lg-8 col-8 mx-auto">
-                        <button type="submit" class="btn btn-outline-dark">Add</button>
-                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </form>
+                        <div class="d-grid gap-2 col-lg-8 col-8 mx-auto">
+                            <button type="submit" class="btn btn-outline-dark">Add</button>
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="d-flex row row-cols-1 row-cols-md-1 row-cols-lg-3 justify-content-center">
 
         {% for block in data %}
 
-            <div class="btn_device d-flex flex-column justify-content-center text-center col-10 col-md-7 col-lg-5 col-xl-4" hx-target="this">
-                <div class="row row-cols-2 mb-1" hx-swap="outerHTML">
-                    <label class="col-lg-6 control-label text-center">Key</label>
-                    <div class="col-lg-6 text-center">
-                        {{ block.key }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1">
-                    <label class="col-lg-6 control-label text-center">Used</label>
-                    <div class="col-lg-6 text-center">
-                        {{ block.used }}
-                    </div>
-                </div>
-                <div class="row row-cols-2 mb-1 align-items-center">
-                    <label class="col-lg-6 control-label text-center">Time end</label>
-                    <div class="col-lg-6 text-center">
-                        {{ block.time_end }}
-                    </div>
-                </div>
-                <div style="text-align: center;">
-                    <button type="button" class="a-btn h-btn a-default"
-                    hx-delete="{% url 'delete_key' block.device_id block.id %}">
-                    Delete</button>
+        <div class="btn_device d-flex flex-column justify-content-center text-center col-10 col-md-7 col-lg-5 col-xl-4"
+             hx-target="this">
+            <div class="row row-cols-2 mb-1" hx-swap="outerHTML">
+                <label class="col-lg-6 control-label text-center">Key</label>
+                <div class="col-lg-6 text-center">
+                    {{ block.key }}
                 </div>
             </div>
-            {% endfor %}
+            <div class="row row-cols-2 mb-1">
+                <label class="col-lg-6 control-label text-center">Used</label>
+                <div class="col-lg-6 text-center">
+                    {{ block.used }}
+                </div>
+            </div>
+            <div class="row row-cols-2 mb-1 align-items-center">
+                <label class="col-lg-6 control-label text-center">Time end</label>
+                <div class="col-lg-6 text-center">
+                    {{ block.time_end }}
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button type="button" class="a-btn h-btn a-default"
+                        hx-delete="{% url 'delete_key' block.device_id block.id %}">
+                    Delete
+                </button>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 

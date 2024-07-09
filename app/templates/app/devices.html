@@ -8,13 +8,13 @@
         <h3>Here you can add your devices</h3>
     </div>
 
-<hr/>
+    <hr/>
 
-<script>
-    document.body.addEventListener('htmx:configRequest', (event) => {
-      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-    })
-</script>
+    <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+          event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+        })
+    </script>
 
     <div class="d-flex row row-cols-1 row-cols-md-1 row-cols-lg-3 justify-content-center">
         {% for block in data %}
@@ -37,25 +37,27 @@
                 <input name="device_name" id="format_text_{{block.id}}" type="hidden" value="">
 
                 <div class="col-lg-6 control-label text-center" hx-post="{% url 'change_device_name' block.id %}"
-                hx-target="#device_name_{{block.id}}">
+                     hx-target="#device_name_{{block.id}}">
                     Device name
                 </div>
 
                 <div class="col-lg-6 text-center" contenteditable="true" id="device_name_{{block.id}}">
                     {{ block.device_name }}
                 </div>
-                
+
             </form>
 
             <div class="row row-cols-2 mb-1">
                 <label class="col-lg-6 control-label text-center">Status</label>
-                <div class="col-lg-6 text-center" hx-patch="{% url 'change_status' block.id %}" hx-trigger="click throttle:5000ms">
+                <div class="col-lg-6 text-center" hx-patch="{% url 'change_status' block.id %}"
+                     hx-trigger="click throttle:5000ms">
                     {{ block.status }}
                 </div>
             </div>
             <div class="row row-cols-2 mb-1">
                 <label class="col-lg-6 control-label text-center">Admin</label>
-                <div class="col-lg-6 text-center" hx-patch="{% url 'change_admin' block.id %}" hx-trigger="click throttle:5000ms">
+                <div class="col-lg-6 text-center" hx-patch="{% url 'change_admin' block.id %}"
+                     hx-trigger="click throttle:5000ms">
                     {{ block.admin }}
                 </div>
             </div>

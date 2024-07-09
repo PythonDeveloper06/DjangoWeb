@@ -27,7 +27,7 @@ class KeysViewSet(NestedViewSetMixin, ModelViewSet):
         device_lock = DeviceModel.objects.get(serial_num=s_num)
         keys = Keys.objects.filter(device_id=device_lock.id)
         return keys
-    
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
