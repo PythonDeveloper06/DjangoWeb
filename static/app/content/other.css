@@ -1,0 +1,187 @@
+/*
+---------------------------
+general settings
+---------------------------
+*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+:root {
+    --text-color: #ffffff;
+    --main-color: #13bbff;
+    --bg-color: #1b1f24;
+
+    --bg-color-image: linear-gradient(#0e0228 38%, #022384);
+    --bl-colors-blue-dark-bg: #140648;
+    --bl-border: #2e54ea;
+    --bg-footer: #0e0226;
+    --bg-profile: #022384;
+
+    --second-bg-color: #22282f;
+    --navside: #191d21;
+    --big-font: 4.5rem;
+    --h4-font: 1.6rem;
+    --p-font: 1.1rem;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    color: var(--text-color);
+    background: var(--bg-color-image);
+    height: 100%;
+}
+
+/*
+---------------------------
+wrapper, main, footer
+---------------------------
+*/
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background: var(--bg-color-image);
+}
+
+.main {
+    margin-top: 50px;
+    flex-grow: 1;
+}
+
+.footer {
+    margin-top: 1rem;
+    padding: 0.5rem 2rem;
+    background: var(--bg-footer);
+}
+
+.footer p {
+    margin-bottom: 0;
+}
+
+.grid_columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.grid_columns p {
+    margin-bottom: 0;
+}
+
+.column p  {
+    display: flex;
+    justify-content: center;
+}
+
+.socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid_columns .column .socials a {
+    color: var(--main-color);
+    border-radius: 3px solid var(--main-color);
+    padding: 2px 5px 0 5px;
+    border-radius: 100%;
+    margin-top: 2px;
+    transition: all .50s ease;
+}
+
+.grid_columns a:hover {
+    box-shadow: 0 0 10px var(--main-color);
+}
+
+.copy_footer {
+    display: flex;
+    justify-content: center;
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 1rem;
+}
+
+/*
+---------------------------
+reg and login
+---------------------------
+*/
+
+.btn_login {
+    padding: 11px 26px;
+    background: transparent;
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
+    border-radius: 8px;
+    transition: all .50s ease;
+    font-weight: 550;
+    cursor: pointer;
+}
+
+.a-default-login {
+    text-decoration: none;
+}
+
+.a-default-login:hover {
+    text-decoration: underline;
+}
+
+/*
+---------------------------
+profile
+---------------------------
+*/
+
+.rounded-circle {
+    border-radius: 50%;
+    width: 100px;
+}
+
+.account-settings .user-profile {
+    margin: 0 0 1rem 0;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+.account-settings .user-profile .user-avatar {
+    margin: 0 0 1rem 0;
+}
+.account-settings .user-profile .user-avatar img {
+    width: 90px;
+    height: 90px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+    border-radius: 100px;
+}
+.account-settings .user-profile h5.user-name {
+    margin: 0 0 0.5rem 0;
+}
+.account-settings .user-profile h6.user-email {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+.account-settings .about {
+    margin: 1rem 0 0 0;
+    font-size: 0.8rem;
+    text-align: center;
+}
+.card {
+    background: var(--bg-profile);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 0;
+    margin-bottom: 1rem;
+}
