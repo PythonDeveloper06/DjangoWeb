@@ -12,9 +12,9 @@ SECRET_KEY = "wicbyurbuxf4376w8xqb64b8q3tv877745-45cw6ct85bbw5"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['djangoweb-production-aade.up.railway.app', 'seld-lock.ru']
 
-CSRF_TRUSTED_ORIGINS = ['https://seld-lock.ru']
+CSRF_TRUSTED_ORIGINS = ['https://seld-lock.ru', 'https://djangoweb-production-aade.up.railway.app']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
