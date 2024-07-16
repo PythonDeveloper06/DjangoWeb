@@ -30,12 +30,12 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class UpdateProfileForm(forms.ModelForm):
-    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}))
+    avatar = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'form-control'}))
     bio = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
 
     class Meta:
         model = Profile
-        fields = ['avatar', 'bio']
+        fields = ['avatar' , 'bio']
 
 
 # !----- Login Users -----!

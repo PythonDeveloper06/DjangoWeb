@@ -12,10 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-try:
-    from .dev_settings import *
-except ImportError:
-    from .production_settings import *
+from .production_settings import *
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS

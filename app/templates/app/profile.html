@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% load static %}
+
 <div class="container mt-5">
     {% for msg in messages %}
     {% if msg.tags == 'error' %}
@@ -24,10 +26,11 @@
                     <div class="account-settings">
                         <div class="user-profile">
                             <div class="user-avatar">
-                                <img src="{{ user.profile.avatar.url }}" alt="User">
+                                <img src="{% static 'app/own_pictures/avatar_icon.png' %}" alt="User">
                             </div>
                             <h5 class="user-name text-white">{{ user_form.username.value }}</h5>
                         </div>
+                        
                         <div class="about">
                             <h5 class="mb-2 text-primary">About</h5>
                             <div class="text-white">{{ profile_form.bio.value }}</div>
@@ -51,7 +54,7 @@
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
 
                                 <div class="form-group">
-                                    <label class="text-white">Username</label>
+                                    <label class="text-white mb-2">Username</label>
                                     <div class="input-profile">{{ user_form.username }}</div>
                                 </div>
 
@@ -61,20 +64,21 @@
                                 </div>
 
                             </div>
-
+                            <!---
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label class="text-white">Avatar</label>
                                     <div class="input-profile">{{ profile_form.avatar }}</div>
                                 </div>
                             </div>
+                            -->
                         </div>
-
+                        
                         <div class="row media-profile input-profile">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <h6 class="mb-3 text-white mt-3">About</h6>
+                                <h6 class="mb-2 text-white mt-4">About</h6>
                             </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-10 w-auto">
                                 <div class="form-group">
                                     <div>{{ profile_form.bio }}</div>
                                 </div>

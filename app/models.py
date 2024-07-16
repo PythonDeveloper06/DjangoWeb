@@ -31,7 +31,7 @@ class DeviceModel(models.Model):
 
 class Profile(models.Model):
     bio = models.TextField(null=True)
-    avatar = models.ImageField(default='default.jpg')
+    avatar = models.ImageField(null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

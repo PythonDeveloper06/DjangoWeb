@@ -157,7 +157,9 @@
     }
 
     .media-profile {
+        display: flex;
         text-align: center;
+        align-items: center;
     }
 
     .input-profile {
@@ -170,5 +172,9 @@
     div.col-xl-4 {
         width: 32%;
     }
+}
+
+@media(max-width: 576px) {
+
 }
 

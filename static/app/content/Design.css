@@ -120,10 +120,15 @@ nav {
     transition: all .50s ease;
 }
 
+nav svg path {
+    transition: all .50s ease;
+}
+
 nav.sticky {
     background: var(--bl-colors-blue-dark-bg);
     box-shadow: 0 1rem 1rem rgba(0, 0, 0, .2);
     padding: 30px 16%;
+    border-radius: 0 0 30px 30px;
 }
 
 .logo {
@@ -158,9 +163,9 @@ span {
     text-shadow: 3px 3px 20px var(--main-color), -2px 1px 30px var(--text-color);
 }
 
-a:hover svg path {
+nav svg:hover path {
     fill: var(--main-color);
-    transition: all .50s ease;
+    transition: all .50s ease-in-out;
     cursor: pointer;
 }
 
@@ -291,8 +296,9 @@ section p {
     justify-content: center;
     background: var(--bg-footer);
     padding: 3rem;
-    margin-bottom: 2rem;
     transition: all .50s ease;
+    margin: 0px 10px 2rem 10px;
+    border-radius: 30px;
 }
 
 .animated_text p {
