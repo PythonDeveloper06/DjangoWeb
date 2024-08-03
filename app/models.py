@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse_lazy
 from django_userforeignkey.models.fields import UserForeignKey
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 from PIL import Image
 
@@ -66,6 +67,6 @@ class Keys(models.Model):
     time_start = models.DateTimeField(null=True)
     time_end = models.DateTimeField(null=True)
     selection = models.CharField(max_length=100, choices=SELECT_CHOICES, default='-')
-    device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE, null=True)
+    device = models.ForeignKey(DeviceModel, on_delete=models.CASCADE)
 
     objects = models.Manager()

@@ -1,9 +1,13 @@
 import pytz
 import datetime
+from django.utils import timezone
 from rest_framework.viewsets import ModelViewSet
+
+from app.others import timepp
 
 from .models import DeviceModel
 from .models import Keys
+from .forms import AddKeysModel
 from .serializers import DeviceSerializer, KeysSerializer
 from rest_framework.response import Response
 
@@ -32,9 +36,9 @@ class KeysViewSet(NestedViewSetMixin, ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
 
         for query in queryset:
-            date_time = datetime.datetime.now()
+            key_time = datetime.datetime.now()
             if query.used == 'T':
-                if date_time.replace(tzinfo=pytz.UTC) > query.time_end:
+                if key_time.replace(tzinfo=pytz.UTC) > query.time_end:
                     Keys.objects.get(pk=query.id).delete()
 
         queryset = self.filter_queryset(self.get_queryset())
@@ -46,3 +50,26 @@ class KeysViewSet(NestedViewSetMixin, ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+    
+
+    def create(self, request, *args, **kwargs):
+
+        time_end = request.data['time_end']
+        slct = request.data['selection']
+        time_d = timepp(time_end, slct)
+
+        form = AddKeysModel({
+            'key': request.data['key'],
+            'used': request.data['used'],
+            'time_start': timezone.make_aware(datetime.datetime.now()),
+            'time_end': time_d,
+            'selection': request.data['selection'],
+            'device': request.data['device'],
+        })
+
+        if form.is_valid():
+            if not Keys.objects.filter(key=request.data['key']):
+                form.save()
+                return Response("Key save")
+            return Response("Key exist")
+        return Response("Key no save")

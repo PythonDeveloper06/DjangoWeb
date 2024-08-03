@@ -122,7 +122,7 @@ class AddDeviceModel(forms.ModelForm):
 class AddKeysModel(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['time_end'].initial = timezone.make_aware(datetime.datetime.now(), timezone=timezone.utc)
+        self.fields['time_end'].initial = timezone.localtime(timezone.now())
         self.fields['key'].initial = new_code()
 
     key = forms.CharField(min_length=4, max_length=16,

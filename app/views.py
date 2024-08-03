@@ -112,7 +112,7 @@ class KeysListView(LoginRequiredMixin, ListView, FormMixin):
         form = AddKeysModel({
             'key': request.POST['key'],
             'used': request.POST['used'],
-            'time_start': timezone.make_aware(datetime.now(), timezone=timezone.get_current_timezone()),
+            'time_start': request.POST.get('time_start', timezone.make_aware(datetime.now())),
             'time_end': time_d,
             'selection': request.POST['selection'],
             'device': device_lock
