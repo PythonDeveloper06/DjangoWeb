@@ -12,7 +12,6 @@ def new_code():
 
 
 def timepp(time, select):
-    print(time)
     try:
         time = datetime.strptime(time, '%d.%m.%Y %H:%M:%S')
     except Exception as e:
