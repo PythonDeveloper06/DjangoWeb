@@ -15,7 +15,7 @@ def timepp(time, select):
     try:
         time = datetime.strptime(time, '%d.%m.%Y %H:%M:%S')
     except Exception as e:
-        time = datetime.strptime(time, '%Y-%d-%mT%H:%M:%SZ')
+        time = datetime.strptime(time, '%Y-%m-%dT%H:%M:%SZ')
     match select:
         case '+1h':
             time += timedelta(hours=1)
