@@ -12,7 +12,7 @@ SECRET_KEY = "wicbyurbuxf4376w8xqb64b8q3tv877745-45cw6ct85bbw5wveyib8745bwcb5cbw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['seld-lock.ru']
 
 CSRF_TRUSTED_ORIGINS = ['https://seld-lock.ru']
 
